@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -oP '#[0-9a-fA-F]{3,6}' /Users/carloshenrique/Documents/Github/PrimeCarFACE/assets/index-D4P7q_eF.css)",
+      "Bash(sed -i '' 's/#2EAA3F/#EAB308/g' assets/index-D4P7q_eF.css)",
+      "Bash(sed -i '' 's/#2eaa3f80/#eab30880/g; s/#2eaa3f00/#eab30800/g; s/#2eaa3f/#eab308/g' assets/index-D4P7q_eF.css)",
+      "Bash(sed -i '' 's/#effbf1/#fefce8/g; s/#EFFBF1/#FEFCE8/g' assets/index-D4P7q_eF.css)",
+      "Bash(sed -i '' 's/#2EAA3F/#EAB308/g' assets/index-wAOTjZ.js)",
+      "Bash(sed -i '' 's/#2EAA3F/#EAB308/g; s/#1E8A2E/#CA8A04/g; s/#F0FFF2/#FEFCE8/g; s/#EAF7EC/#FEF9C3/g; s/#C3E6C8/#FDE68A/g' assets/index-wAOTjJ2Z.js)",
+      "Bash(sed -i '' 's/rgba\\(46,170,63,0\\\\.10\\)/rgba\\(234,179,8,0.10\\)/g; s/rgba\\(46,170,63,0\\\\.20\\)/rgba\\(234,179,8,0.20\\)/g; s/rgba\\(46,170,63,0\\\\.45\\)/rgba\\(234,179,8,0.45\\)/g' assets/index-wAOTjJ2Z.js)"
+    ]
+  }
+}
