@@ -713,6 +713,87 @@
     /* Smooth appear */
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ==============================
+       MOBILE FIRST — max-width: 640px
+       ============================== */
+    @media(max-width:640px){
+      /* Body: space for sticky CTA */
+      body { padding-bottom: 76px; }
+
+      /* Sections: less vertical breathing room */
+      section { padding: 44px 0; }
+      #cta-final { padding: 48px 16px; }
+      footer { padding: 40px 16px 96px; }
+
+      /* Hero */
+      .hero { padding: 32px 16px 36px; }
+      .hero h1 { font-size: 26px; letter-spacing: -0.01em; }
+      .hero-sub { font-size: 14px; margin-bottom: 24px; }
+      .hero-stars { font-size: 12px; margin-bottom: 28px; }
+
+      /* Selector box */
+      .selector-box { padding: 20px 16px; border-radius: 12px; }
+      .selector-box h2 { font-size: 15px; }
+      .btn-ver-opcoes { font-size: 14px; padding: 14px; }
+
+      /* Color buttons: 44px touch target */
+      .color-btn { width: 40px; height: 40px; }
+
+      /* Kit cards */
+      .kit-card { padding: 20px 16px; }
+      .kit-name { font-size: 16px; }
+      .price-por { font-size: 28px; }
+      .btn-checkout { font-size: 15px; padding: 16px; }
+
+      /* Section titles */
+      .section-title { margin-bottom: 28px; }
+      .section-title h2 { font-size: 22px; }
+      .section-title p { font-size: 13px; }
+
+      /* Benefits: 2 columns on small phones looks better than 1 */
+      .benefits-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .benefit-card { padding: 16px; }
+      .benefit-icon { font-size: 24px; margin-bottom: 8px; }
+      .benefit-card h3 { font-size: 13px; }
+      .benefit-card p { font-size: 12px; }
+
+      /* Features: remove RTL trick, show img above text */
+      .features-grid.reverse { direction: ltr; }
+      .features-grid { margin-bottom: 36px; gap: 20px; }
+      .feature-content h3 { font-size: 17px; }
+      .feature-content p { font-size: 13px; }
+
+      /* Urgency widget */
+      .urgency-top { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .stock-badge { font-size: 13px; }
+      .timer-box { font-size: 12px; }
+      .timer-display { font-size: 17px; }
+
+      /* Guarantee */
+      .guarantee-box { padding: 24px 16px; gap: 20px; }
+      .guarantee-icon { font-size: 52px; }
+      .guarantee-box h3 { font-size: 18px; }
+
+      /* FAQ */
+      .faq-q { font-size: 13px; padding: 16px; }
+
+      /* Final CTA buttons */
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 15px 20px; }
+      .cta-btns { flex-direction: column; align-items: stretch; }
+
+      /* Trust icons wrap better */
+      .trust-icons { gap: 12px; font-size: 11px; }
+
+      /* VS table: tighter */
+      .vs-table td, .vs-table th { padding: 10px 10px; font-size: 11px; }
+    }
+
+    /* Extra small (320px) */
+    @media(max-width:360px){
+      .hero h1 { font-size: 23px; }
+      .benefits-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -874,19 +955,19 @@
     <div class="antes-depois-grid">
       <div class="ad-card">
         <span class="ad-label antes">Sem PrimeCar</span>
-        <img src="assets/antes1-4dfdGCTW.webp" alt="Antes — assoalho sem proteção">
+        <img loading="lazy" src="assets/antes1-4dfdGCTW.webp" alt="Antes — assoalho sem proteção">
       </div>
       <div class="ad-card">
         <span class="ad-label depois">Com PrimeCar 3D</span>
-        <img src="assets/depois1-BhSJItsI.webp" alt="Depois — tapete bandeja 3D instalado">
+        <img loading="lazy" src="assets/depois1-BhSJItsI.webp" alt="Depois — tapete bandeja 3D instalado">
       </div>
       <div class="ad-card">
         <span class="ad-label antes">Tapete genérico</span>
-        <img src="assets/antes2-DUbqAbXf.webp" alt="Antes — tapete genérico com fresta">
+        <img loading="lazy" src="assets/antes2-DUbqAbXf.webp" alt="Antes — tapete genérico com fresta">
       </div>
       <div class="ad-card">
         <span class="ad-label depois">Encaixe milimétrico</span>
-        <img src="assets/depois2-B2Vnq3Ah.webp" alt="Depois — encaixe perfeito">
+        <img loading="lazy" src="assets/depois2-B2Vnq3Ah.webp" alt="Depois — encaixe perfeito">
       </div>
     </div>
   </div>
@@ -943,7 +1024,7 @@
     </div>
 
     <div class="features-grid">
-      <img class="feature-img" src="assets/tp3-textura-7Piw0fvh.webp" alt="Textura antiderrapante">
+      <img loading="lazy" class="feature-img" src="assets/tp3-textura-7Piw0fvh.webp" alt="Textura antiderrapante">
       <div class="feature-content">
         <h3>Textura <em>antiderrapante</em> em toda a superfície</h3>
         <p>Padrão 3D exclusivo que agarra a sola do sapato e evita que o tapete deslize no assoalho. Nunca mais empurra involuntariamente para baixo do pedal.</p>
@@ -951,7 +1032,7 @@
     </div>
 
     <div class="features-grid reverse">
-      <img class="feature-img" src="assets/tp4-fixacao-BUULKmgM.webp" alt="Ilhós de fixação">
+      <img loading="lazy" class="feature-img" src="assets/tp4-fixacao-BUULKmgM.webp" alt="Ilhós de fixação">
       <div class="feature-content">
         <h3>Ilhós de fixação <em>originais de fábrica</h3>
         <p>Encaixam nos pontos originais do assoalho do seu carro. O tapete fica travado — sem velcro, sem cola, sem adaptação improvisada.</p>
@@ -959,7 +1040,7 @@
     </div>
 
     <div class="features-grid">
-      <img class="feature-img" src="assets/tp5-impermeavel-DDZCocOH.webp" alt="Impermeável">
+      <img loading="lazy" class="feature-img" src="assets/tp5-impermeavel-DDZCocOH.webp" alt="Impermeável">
       <div class="feature-content">
         <h3>Borda elevada <em>3cm</em> — retém tudo</h3>
         <p>Água, café, lama, areia — tudo fica contido dentro do tapete. Basta remover e lavar com mangueira ou pano úmido.</p>
@@ -967,7 +1048,7 @@
     </div>
 
     <div class="features-grid reverse">
-      <img class="feature-img" src="assets/tp7-borda-elevada-DUkQfJFg.webp" alt="Borda elevada">
+      <img loading="lazy" class="feature-img" src="assets/tp7-borda-elevada-DUkQfJFg.webp" alt="Borda elevada">
       <div class="feature-content">
         <h3>Material TPE de alta densidade — <em>sem odor</em></h3>
         <p>Tecnologia termoplástica premium usada por montadoras. Resistente a temperaturas extremas, não deforma no verão, não endurece no inverno. E sem aquele cheiro de borracha barata.</p>
@@ -1045,7 +1126,7 @@
     <div class="reviews-grid">
       <div class="review-card">
         <div class="review-header">
-          <img class="review-avatar" src="videos/homem-1.jpg" alt="Lucas Almeida">
+          <img loading="lazy" class="review-avatar" src="videos/homem-1.jpg" alt="Lucas Almeida">
           <div class="review-meta">
             <div class="review-name">Lucas Almeida</div>
             <div class="review-location">São Paulo, SP</div>
@@ -1059,7 +1140,7 @@
 
       <div class="review-card">
         <div class="review-header">
-          <img class="review-avatar" src="videos/mulher-1.jpg" alt="Mariana Costa">
+          <img loading="lazy" class="review-avatar" src="videos/mulher-1.jpg" alt="Mariana Costa">
           <div class="review-meta">
             <div class="review-name">Mariana Costa</div>
             <div class="review-location">Belo Horizonte, MG</div>
@@ -1073,7 +1154,7 @@
 
       <div class="review-card">
         <div class="review-header">
-          <img class="review-avatar" src="videos/homem-2.jpg" alt="Fernando Gomes">
+          <img loading="lazy" class="review-avatar" src="videos/homem-2.jpg" alt="Fernando Gomes">
           <div class="review-meta">
             <div class="review-name">Fernando Gomes</div>
             <div class="review-location">Curitiba, PR</div>
@@ -1087,7 +1168,7 @@
 
       <div class="review-card">
         <div class="review-header">
-          <img class="review-avatar" src="videos/mulher-2.webp" alt="Ana Paula Ribeiro">
+          <img loading="lazy" class="review-avatar" src="videos/mulher-2.webp" alt="Ana Paula Ribeiro">
           <div class="review-meta">
             <div class="review-name">Ana Paula Ribeiro</div>
             <div class="review-location">Rio de Janeiro, RJ</div>
@@ -1101,7 +1182,7 @@
 
       <div class="review-card">
         <div class="review-header">
-          <img class="review-avatar" src="videos/homem-3.jpg" alt="Bruno Martins">
+          <img loading="lazy" class="review-avatar" src="videos/homem-3.jpg" alt="Bruno Martins">
           <div class="review-meta">
             <div class="review-name">Bruno Martins</div>
             <div class="review-location">Brasília, DF</div>
@@ -1115,7 +1196,7 @@
 
       <div class="review-card">
         <div class="review-header">
-          <img class="review-avatar" src="videos/mulher-3.png" alt="Camila Ferreira">
+          <img loading="lazy" class="review-avatar" src="videos/mulher-3.png" alt="Camila Ferreira">
           <div class="review-meta">
             <div class="review-name">Camila Ferreira</div>
             <div class="review-location">Porto Alegre, RS</div>
