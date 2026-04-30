@@ -228,7 +228,7 @@
     .btn-ver-opcoes:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,107,0,0.35); }
     .btn-ver-opcoes:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* URGENCY WIDGET (after selection) */
+    /* URGENCY WIDGET (only after vehicle selected) */
     #urgency-widget {
       display: none;
       max-width: 680px;
@@ -240,6 +240,30 @@
     }
     #urgency-widget.visible { display: block; animation: slideDown 0.3s ease; }
     @keyframes slideDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Loading state */
+    .urgency-loading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--gray);
+    }
+    .urgency-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Revealed state */
+    .urgency-revealed { display: none; }
+    #urgency-widget.revealed .urgency-loading { display: none; }
+    #urgency-widget.revealed .urgency-revealed { display: block; }
+
     .urgency-top {
       display: flex;
       align-items: center;
@@ -955,19 +979,27 @@
     </button>
   </div>
 
-  <!-- URGENCY WIDGET -->
+  <!-- URGENCY WIDGET — só aparece após selecionar veículo -->
   <div id="urgency-widget">
-    <div class="urgency-top">
-      <div class="stock-badge">
-        <div class="stock-dot"></div>
-        <span>Últimas <span class="stock-count" id="stock-num">--</span> unidades neste preço</span>
-      </div>
-      <div class="timer-box">
-        ⏱ Oferta expira em
-        <span class="timer-display" id="timer-display">14:59</span>
-      </div>
+    <!-- Estado 1: loading (simulando consulta de estoque) -->
+    <div class="urgency-loading">
+      <div class="urgency-spinner"></div>
+      <span id="urgency-loading-label">Verificando estoque disponível...</span>
     </div>
-    <div class="urgency-sub" id="urgency-car-label">Estoque reservado para o modelo selecionado</div>
+    <!-- Estado 2: revelado -->
+    <div class="urgency-revealed">
+      <div class="urgency-top">
+        <div class="stock-badge">
+          <div class="stock-dot"></div>
+          <span>Últimas <span class="stock-count" id="stock-num">--</span> unidades neste preço</span>
+        </div>
+        <div class="timer-box">
+          ⏱ Oferta expira em
+          <span class="timer-display" id="timer-display">14:59</span>
+        </div>
+      </div>
+      <div class="urgency-sub" id="urgency-car-label">Estoque reservado para o modelo selecionado</div>
+    </div>
   </div>
 </section>
 
@@ -1735,42 +1767,61 @@ function onModeloChange() {
 function onAnoChange() {
   const ano = selAno.value;
   btnVer.disabled = !ano;
+  hideUrgency();
+  if (!ano) return;
+  const marca = selMarca.value;
+  const modelo = selModelo.value;
+  // Dispara o loading assim que o ano é selecionado — parece consulta real
+  triggerUrgency(`${marca} ${modelo} ${ano}`);
 }
 
 function verOpcoes() {
-  const marca = selMarca.value;
-  const modelo = selModelo.value;
-  const ano = selAno.value;
-  if (!marca || !modelo || !ano) return;
-  showUrgency(`${marca} ${modelo} ${ano}`);
+  if (btnVer.disabled) return;
   document.getElementById('kits').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // =====================
 // URGENCY LOGIC
+// Só dispara após seleção completa do veículo
 // =====================
 let stockNum = 0;
 let timerInterval = null;
 let stockInterval = null;
 let timerSecs = 0;
+let revealTimeout = null;
 
-function showUrgency(carLabel) {
+function triggerUrgency(carLabel) {
+  const widget = document.getElementById('urgency-widget');
+
+  // Mostra widget no estado "loading" — parece consulta real
+  widget.classList.remove('revealed');
+  widget.classList.add('visible');
+  document.getElementById('urgency-loading-label').textContent =
+    `Verificando estoque para ${carLabel}...`;
+
+  clearTimeout(revealTimeout);
+  clearInterval(timerInterval);
+  clearInterval(stockInterval);
+
+  // Após 1.4s revela o número — simula resposta do sistema
+  revealTimeout = setTimeout(() => revealUrgency(carLabel), 1400);
+}
+
+function revealUrgency(carLabel) {
   const widget = document.getElementById('urgency-widget');
   const stockKey = 'pc_stock_' + carLabel.replace(/\s/g,'_');
-  const timeKey = 'pc_time_' + carLabel.replace(/\s/g,'_');
+  const timeKey  = 'pc_time_'  + carLabel.replace(/\s/g,'_');
 
-  // Session-based stock: persist within session
   let stock = parseInt(sessionStorage.getItem(stockKey));
   if (!stock || stock < 1) {
-    stock = Math.floor(Math.random() * 5) + 8; // 8-12
+    stock = Math.floor(Math.random() * 5) + 8; // 8–12
     sessionStorage.setItem(stockKey, stock);
   }
   stockNum = stock;
   document.getElementById('stock-num').textContent = stockNum;
   document.getElementById('urgency-car-label').textContent =
-    `Estoque reservado para ${carLabel} — atualizado agora`;
+    `Estoque encontrado para ${carLabel} — reservado por tempo limitado`;
 
-  // Timer: 14:59 countdown, persist within session
   let remaining = parseInt(sessionStorage.getItem(timeKey));
   if (!remaining || remaining <= 0) {
     remaining = 14 * 60 + 59;
@@ -1779,23 +1830,16 @@ function showUrgency(carLabel) {
   timerSecs = remaining;
   updateTimerDisplay();
 
-  widget.classList.add('visible');
+  widget.classList.add('revealed');
 
-  // Clear old intervals
-  clearInterval(timerInterval);
-  clearInterval(stockInterval);
-
-  // Timer countdown
   timerInterval = setInterval(() => {
     timerSecs--;
-    if (timerSecs <= 0) {
-      timerSecs = 14 * 60 + 59; // reset
-    }
+    if (timerSecs <= 0) timerSecs = 14 * 60 + 59;
     sessionStorage.setItem(timeKey, timerSecs);
     updateTimerDisplay();
   }, 1000);
 
-  // Stock decrement every 3 minutes
+  // Cai 1 unidade a cada 3 minutos — nunca chega a 0
   stockInterval = setInterval(() => {
     if (stockNum > 1) {
       stockNum--;
@@ -1806,7 +1850,9 @@ function showUrgency(carLabel) {
 }
 
 function hideUrgency() {
-  document.getElementById('urgency-widget').classList.remove('visible');
+  const widget = document.getElementById('urgency-widget');
+  widget.classList.remove('visible', 'revealed');
+  clearTimeout(revealTimeout);
   clearInterval(timerInterval);
   clearInterval(stockInterval);
 }
