@@ -95,27 +95,71 @@
       z-index: 100;
     }
     header img { height: 36px; }
-    .header-trust {
-      display: flex;
-      gap: 18px;
-      font-size: 12px;
+
+    /* NAV */
+    .nav { display: flex; align-items: center; gap: 4px; }
+    .nav a {
       color: var(--gray);
-    }
-    .header-trust span { display: flex; align-items: center; gap: 5px; }
-    .header-trust .ic { font-size: 14px; }
-    .header-cta {
-      background: var(--orange);
-      color: var(--black);
-      font-weight: 700;
       font-size: 13px;
-      padding: 8px 18px;
-      border-radius: 6px;
+      font-weight: 500;
       text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
       white-space: nowrap;
     }
-    @media(max-width:640px){
-      .header-trust { display: none; }
-      .header-cta { font-size: 12px; padding: 7px 12px; }
+    .nav a:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .nav a.nav-sac {
+      color: var(--orange);
+      border: 1px solid rgba(255,107,0,0.35);
+      font-weight: 600;
+    }
+    .nav a.nav-sac:hover { background: rgba(255,107,0,0.1); }
+
+    /* HAMBURGER (mobile) */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--white);
+    }
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 65px;
+      left: 0; right: 0;
+      background: rgba(8,8,8,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      color: var(--gray);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 12px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-drawer a:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .nav-drawer a.nav-sac {
+      color: var(--orange);
+      font-weight: 700;
+      border: 1px solid rgba(255,107,0,0.35);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    @media(max-width:760px){
+      .nav { display: none; }
+      .nav-hamburger { display: flex; }
     }
 
     /* HERO */
@@ -952,7 +996,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
     }
     .why-reason-text h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
     .why-reason-text p { font-size: 13px; color: var(--gray); line-height: 1.6; }
@@ -978,17 +1021,34 @@
 
 <!-- HEADER -->
 <header>
-  <img src="assets/primecar-logo-B4sAR4Xr.png" alt="PrimeCar">
-  <div class="header-trust">
-    <span><span class="ic">🔒</span> Compra Segura</span>
-    <span><span class="ic">⭐</span> 4.9 • 1.247 avaliações</span>
-    <span><span class="ic">🚚</span> Frete Grátis</span>
-  </div>
-  <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="header-cta">Falar no WhatsApp</a>
+  <a href="#inicio"><img src="assets/primecar-logo-B4sAR4Xr.png" alt="PrimeCar"></a>
+
+  <nav class="nav">
+    <a href="#inicio">Início</a>
+    <a href="#kits">Nossos Tapetes</a>
+    <a href="#avaliacoes">Avaliações</a>
+    <a href="#garantia">Garantia</a>
+    <a href="#faq">Sobre Nós</a>
+    <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener">SAC</a>
+  </nav>
+
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
+    <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
 </header>
 
+<nav class="nav-drawer" id="nav-drawer">
+  <a href="#inicio" onclick="closeNav()">Início</a>
+  <a href="#kits" onclick="closeNav()">Nossos Tapetes</a>
+  <a href="#avaliacoes" onclick="closeNav()">Avaliações</a>
+  <a href="#garantia" onclick="closeNav()">Garantia</a>
+  <a href="#faq" onclick="closeNav()">Sobre Nós</a>
+  <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener" onclick="closeNav()">💬 Falar com o SAC</a>
+</nav>
+
 <!-- HERO -->
-<section class="hero">
+<section id="inicio" class="hero">
   <div class="hero-badge">⚡ Tapete Bandeja 3D Premium • Edição Especial</div>
   <h1>Seu carro merece um tapete<br>feito <em>milímetro a milímetro</em><br>para ele</h1>
   <p class="hero-sub">Chega de tapete genérico que desliza, cheira borracha e deixa fresta. O PrimeCar 3D encaixa como peça original — impermeável, inodoro e protege o assoalho que vale milhares.</p>
@@ -1135,28 +1195,36 @@
     </div>
     <div class="why-reasons">
       <div class="why-reason">
-        <div class="why-reason-icon">🏭</div>
+        <div class="why-reason-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>
+        </div>
         <div class="why-reason-text">
           <h3>Direto da fábrica, sem intermediários</h3>
           <p>Trabalhamos direto com o fabricante em grande escala. Sem representante, sem distribuidor, sem margem de terceiros. A economia vai direto pro seu bolso.</p>
         </div>
       </div>
       <div class="why-reason">
-        <div class="why-reason-icon">📦</div>
+        <div class="why-reason-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/><polyline points="16 16 18 18 22 14"/></svg>
+        </div>
         <div class="why-reason-text">
           <h3>100% online — sem custo de loja física</h3>
           <p>Sem aluguel de ponto comercial, sem funcionário de balcão, sem showroom. Operamos apenas online e repassamos esse custo zero pra você.</p>
         </div>
       </div>
       <div class="why-reason">
-        <div class="why-reason-icon">🚗</div>
+        <div class="why-reason-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2l2-3h6l2 3h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg>
+        </div>
         <div class="why-reason-text">
           <h3>Volume alto de vendas</h3>
           <p>Com milhares de kits vendidos por mês, conseguimos negociar preços muito menores com nossos fornecedores. Quanto mais vendemos, mais barato fica pra você.</p>
         </div>
       </div>
       <div class="why-reason">
-        <div class="why-reason-icon">🔥</div>
+        <div class="why-reason-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </div>
         <div class="why-reason-text">
           <h3>Preço promocional — não vai durar</h3>
           <p>Estamos em fase de expansão e queremos conquistar novos clientes com esse preço especial. Quando atingirmos nossa meta de vendas, ele volta ao preço cheio.</p>
@@ -1527,7 +1595,7 @@
 </section>
 
 <!-- REVIEWS -->
-<section>
+<section id="avaliacoes">
   <div class="container">
     <div class="section-title">
       <div class="tag">Avaliações reais</div>
@@ -1623,7 +1691,7 @@
 </section>
 
 <!-- GUARANTEE -->
-<section style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<section id="garantia" style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="guarantee-box">
       <div class="guarantee-icon">🛡️</div>
@@ -2000,6 +2068,21 @@ function toggleFaq(btn) {
   const isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
+}
+
+// =====================
+// NAV HAMBURGER
+// =====================
+function toggleNav() {
+  const drawer = document.getElementById('nav-drawer');
+  const isOpen = drawer.classList.toggle('open');
+  document.getElementById('icon-menu').style.display = isOpen ? 'none' : 'block';
+  document.getElementById('icon-close').style.display = isOpen ? 'block' : 'none';
+}
+function closeNav() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('icon-menu').style.display = 'block';
+  document.getElementById('icon-close').style.display = 'none';
 }
 
 // =====================
