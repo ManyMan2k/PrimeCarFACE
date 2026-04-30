@@ -707,6 +707,116 @@
       text-decoration: none;
     }
 
+    /* QUALITY TESTS */
+    .qt-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .qt-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      min-width: 90px;
+      color: var(--gray);
+      font-family: 'Poppins', sans-serif;
+    }
+    .qt-tab:hover { border-color: rgba(255,107,0,0.4); color: var(--white); }
+    .qt-tab.active {
+      border-color: var(--orange);
+      background: rgba(255,107,0,0.1);
+      color: var(--white);
+    }
+    .qt-icon { font-size: 22px; }
+    .qt-label { font-size: 11px; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap; }
+
+    .qt-panels { position: relative; }
+    .qt-panel {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      animation: qtFade 0.3s ease;
+    }
+    .qt-panel.active { display: grid; }
+    @keyframes qtFade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    .qt-media { position: relative; border-radius: 14px; overflow: hidden; background: #0d0d0d; }
+    .qt-media img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+    .qt-result-badge {
+      position: absolute;
+      bottom: 14px; left: 14px;
+      background: rgba(34,197,94,0.92);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 100px;
+      backdrop-filter: blur(4px);
+    }
+
+    .qt-content { display: flex; flex-direction: column; gap: 20px; }
+    .qt-scenario-label, .qt-result-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .qt-scenario-label { color: var(--orange); }
+    .qt-result-label { color: var(--green); }
+    .qt-scenario p, .qt-result p { font-size: 14px; color: #CCC; line-height: 1.7; }
+    .qt-result p strong { color: var(--white); }
+    .qt-divider { height: 1px; background: var(--border); }
+
+    .qt-stats {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .qt-stat {
+      flex: 1;
+      text-align: center;
+      padding: 14px 8px;
+      border-right: 1px solid var(--border);
+    }
+    .qt-stat:last-child { border-right: none; }
+    .qt-stat-num {
+      display: block;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .qt-stat-desc { font-size: 10px; color: var(--gray); font-weight: 500; }
+
+    @media(max-width:700px){
+      .qt-panel.active { grid-template-columns: 1fr; gap: 20px; }
+      .qt-tabs { gap: 6px; }
+      .qt-tab { min-width: 75px; padding: 10px 12px; }
+      .qt-icon { font-size: 18px; }
+      .qt-label { font-size: 10px; }
+      .qt-stat-num { font-size: 15px; }
+    }
+    @media(max-width:400px){
+      .qt-tab { min-width: 60px; padding: 8px 8px; }
+      .qt-label { display: none; }
+      .qt-icon { font-size: 22px; }
+    }
+
     /* Separator */
     .divider { height: 1px; background: var(--border); }
 
@@ -973,8 +1083,196 @@
   </div>
 </section>
 
+<!-- QUALITY TESTS -->
+<section id="testes" style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-title">
+      <div class="tag">Testes extremos de qualidade</div>
+      <h2>Veja o que ele <em>aguenta</em> de verdade</h2>
+      <p>Toque em cada teste para ver o resultado.</p>
+    </div>
+
+    <!-- TAB BUTTONS -->
+    <div class="qt-tabs">
+      <button class="qt-tab active" onclick="qtSelect(0)">
+        <span class="qt-icon">💧</span>
+        <span class="qt-label">Impermeável</span>
+      </button>
+      <button class="qt-tab" onclick="qtSelect(1)">
+        <span class="qt-icon">☕</span>
+        <span class="qt-label">Café & Líquidos</span>
+      </button>
+      <button class="qt-tab" onclick="qtSelect(2)">
+        <span class="qt-icon">🌿</span>
+        <span class="qt-label">Fácil de Limpar</span>
+      </button>
+      <button class="qt-tab" onclick="qtSelect(3)">
+        <span class="qt-icon">🌡️</span>
+        <span class="qt-label">Calor Extremo</span>
+      </button>
+      <button class="qt-tab" onclick="qtSelect(4)">
+        <span class="qt-icon">🎯</span>
+        <span class="qt-label">Precisão 3D</span>
+      </button>
+      <button class="qt-tab" onclick="qtSelect(5)">
+        <span class="qt-icon">💪</span>
+        <span class="qt-label">Resistência</span>
+      </button>
+    </div>
+
+    <!-- TAB PANELS -->
+    <div class="qt-panels">
+
+      <!-- 0: Impermeável -->
+      <div class="qt-panel active">
+        <div class="qt-media">
+          <img loading="lazy" src="assets/tp5-impermeavel-DDZCocOH.webp" alt="Teste impermeável">
+          <div class="qt-result-badge">✓ 100% impermeável</div>
+        </div>
+        <div class="qt-content">
+          <div class="qt-scenario">
+            <span class="qt-scenario-label">🔬 Cenário do teste</span>
+            <p>Simulação de chuva pesada e derramamento de líquidos dentro do carro — o pior cenário para o assoalho original.</p>
+          </div>
+          <div class="qt-divider"></div>
+          <div class="qt-result">
+            <span class="qt-result-label">✅ Resultado</span>
+            <p>A borda elevada de <strong>3cm</strong> reteve 100% do líquido. Zero passou para o assoalho original. O material TPE não absorve — basta retirar o tapete e lavar.</p>
+          </div>
+          <div class="qt-stats">
+            <div class="qt-stat"><span class="qt-stat-num">3cm</span><span class="qt-stat-desc">Borda elevada</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">100%</span><span class="qt-stat-desc">Impermeável</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">0%</span><span class="qt-stat-desc">Absorção</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1: Café & Líquidos -->
+      <div class="qt-panel">
+        <div class="qt-media">
+          <img loading="lazy" src="assets/detalhe1-j4PVAraN.webp" alt="Teste café e líquidos">
+          <div class="qt-result-badge">✓ Limpo em 5 segundos</div>
+        </div>
+        <div class="qt-content">
+          <div class="qt-scenario">
+            <span class="qt-scenario-label">🔬 Cenário do teste</span>
+            <p>Café quente, suco e refrigerante derramados diretamente sobre o tapete — o acidente mais comum dentro do carro.</p>
+          </div>
+          <div class="qt-divider"></div>
+          <div class="qt-result">
+            <span class="qt-result-label">✅ Resultado</span>
+            <p>Nenhum líquido chegou ao assoalho. A superfície TPE <strong>não mancha e não absorve odor</strong>. Passou um pano úmido — ficou como novo. Sem aquele cheiro de café azedo que nunca sai do carro.</p>
+          </div>
+          <div class="qt-stats">
+            <div class="qt-stat"><span class="qt-stat-num">5s</span><span class="qt-stat-desc">Para limpar</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">0</span><span class="qt-stat-desc">Manchas</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">0</span><span class="qt-stat-desc">Odor residual</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2: Fácil de Limpar -->
+      <div class="qt-panel">
+        <div class="qt-media">
+          <img loading="lazy" src="assets/detalhe2-B_UBOJmp.webp" alt="Facilidade de limpeza">
+          <div class="qt-result-badge">✓ Tira e lava em segundos</div>
+        </div>
+        <div class="qt-content">
+          <div class="qt-scenario">
+            <span class="qt-scenario-label">🔬 Cenário do teste</span>
+            <p>Terra, areia, migalhas e lama jogadas sobre o tapete — simulando uma semana normal de uso real no dia a dia.</p>
+          </div>
+          <div class="qt-divider"></div>
+          <div class="qt-result">
+            <span class="qt-result-label">✅ Resultado</span>
+            <p>O tapete foi retirado, sacudido e lavado com uma garrafa de água. <strong>Secou em minutos</strong> ao sol. Sem escova, sem produto especial. O tapete de tecido comum? Encharcado por horas e cheio de bactéria.</p>
+          </div>
+          <div class="qt-stats">
+            <div class="qt-stat"><span class="qt-stat-num">30s</span><span class="qt-stat-desc">Limpeza total</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">Água</span><span class="qt-stat-desc">Único produto</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">Rápido</span><span class="qt-stat-desc">Secagem</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: Calor Extremo -->
+      <div class="qt-panel">
+        <div class="qt-media">
+          <img loading="lazy" src="assets/tp3-textura-7Piw0fvh.webp" alt="Resistência ao calor">
+          <div class="qt-result-badge">✓ Não deforma no calor</div>
+        </div>
+        <div class="qt-content">
+          <div class="qt-scenario">
+            <span class="qt-scenario-label">🔬 Cenário do teste</span>
+            <p>Carro fechado no sol de verão brasileiro — temperatura interna pode passar de 70°C. O teste simula esse calor extremo por 4 horas.</p>
+          </div>
+          <div class="qt-divider"></div>
+          <div class="qt-result">
+            <span class="qt-result-label">✅ Resultado</span>
+            <p>O TPE de alta densidade <strong>não deformou, não enrugou e não soltou cheiro</strong>. Tapetes baratos de PVC amolecem, deformam e liberam gases tóxicos no calor. O PrimeCar mantém a forma original e permanece inodoro.</p>
+          </div>
+          <div class="qt-stats">
+            <div class="qt-stat"><span class="qt-stat-num">70°C</span><span class="qt-stat-desc">Testado até</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">0</span><span class="qt-stat-desc">Deformações</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">0</span><span class="qt-stat-desc">Odor liberado</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4: Precisão 3D -->
+      <div class="qt-panel">
+        <div class="qt-media">
+          <img loading="lazy" src="assets/tp6-instalado-B_3EoPkF.webp" alt="Precisão 3D de encaixe">
+          <div class="qt-result-badge">✓ Encaixe sem folga</div>
+        </div>
+        <div class="qt-content">
+          <div class="qt-scenario">
+            <span class="qt-scenario-label">🔬 Cenário do teste</span>
+            <p>Comparação de encaixe entre tapete genérico "universal" e o PrimeCar 3D feito sob medida para o mesmo modelo de veículo.</p>
+          </div>
+          <div class="qt-divider"></div>
+          <div class="qt-result">
+            <span class="qt-result-label">✅ Resultado</span>
+            <p>O PrimeCar encaixou nos <strong>pontos originais de fábrica sem folga visível</strong>. O genérico deixou frestas de até 3cm nas laterais — acumulando sujeira diretamente no assoalho. O encaixe perfeito também <strong>elimina o risco de deslizar para o pedal</strong>.</p>
+          </div>
+          <div class="qt-stats">
+            <div class="qt-stat"><span class="qt-stat-num">0mm</span><span class="qt-stat-desc">Folga lateral</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">3D</span><span class="qt-stat-desc">Escaneamento</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">Trava</span><span class="qt-stat-desc">Nos ilhós originais</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5: Resistência -->
+      <div class="qt-panel">
+        <div class="qt-media">
+          <img loading="lazy" src="assets/tp4-fixacao-BUULKmgM.webp" alt="Resistência e durabilidade">
+          <div class="qt-result-badge">✓ Garantia 12 meses</div>
+        </div>
+        <div class="qt-content">
+          <div class="qt-scenario">
+            <span class="qt-scenario-label">🔬 Cenário do teste</span>
+            <p>Dobramento, pressão de carga pesada e uso intenso diário simulando 2 anos de utilização contínua no veículo.</p>
+          </div>
+          <div class="qt-divider"></div>
+          <div class="qt-result">
+            <span class="qt-result-label">✅ Resultado</span>
+            <p>O material TPE <strong>voltou à forma original após cada teste de dobramento</strong>. Suportou carga de até 150kg sem deformar permanentemente. Bordas e ilhós permaneceram intactos. Por isso oferecemos <strong>12 meses de garantia</strong> sem burocracia.</p>
+          </div>
+          <div class="qt-stats">
+            <div class="qt-stat"><span class="qt-stat-num">150kg</span><span class="qt-stat-desc">Carga suportada</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">12</span><span class="qt-stat-desc">Meses garantia</span></div>
+            <div class="qt-stat"><span class="qt-stat-num">TPE</span><span class="qt-stat-desc">Alta densidade</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /qt-panels -->
+  </div>
+</section>
+
 <!-- BENEFITS -->
-<section style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<section style="background: var(--black); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="section-title">
       <div class="tag">Por que PrimeCar 3D</div>
@@ -1557,6 +1855,14 @@ function checkout(kit) {
   UTM_KEYS.forEach(k => { if (params.has(k)) out.set(k, params.get(k)); });
   const url = out.toString() ? base + '&' + out.toString() : base;
   window.location.href = url;
+}
+
+// =====================
+// QUALITY TESTS TABS
+// =====================
+function qtSelect(idx) {
+  document.querySelectorAll('.qt-tab').forEach((t,i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.qt-panel').forEach((p,i) => p.classList.toggle('active', i === idx));
 }
 
 // =====================
