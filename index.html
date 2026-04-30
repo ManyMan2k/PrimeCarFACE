@@ -973,6 +973,129 @@
       .benefits-grid { grid-template-columns: 1fr; }
     }
 
+    /* VIDEO REVIEWS */
+    .vreview-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .vreview-scroll::-webkit-scrollbar { height: 4px; }
+    .vreview-scroll::-webkit-scrollbar-track { background: var(--border); border-radius: 2px; }
+    .vreview-scroll::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+    .vreview-item {
+      flex-shrink: 0;
+      width: 150px;
+      scroll-snap-align: start;
+      cursor: pointer;
+    }
+    .vreview-thumb {
+      position: relative;
+      aspect-ratio: 9/16;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .vreview-thumb video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .vreview-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    .vreview-play svg { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .vreview-item:hover .vreview-play { background: rgba(0,0,0,0.1); }
+    .vreview-info { padding: 8px 2px 0; }
+    .vreview-info .review-stars { font-size: 11px; color: var(--amber); margin-bottom: 2px; }
+    .vreview-name { font-size: 12px; font-weight: 600; }
+
+    /* EXPO VIDEOS */
+    .expo-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      justify-content: center;
+    }
+    .expo-scroll::-webkit-scrollbar { height: 4px; }
+    .expo-scroll::-webkit-scrollbar-track { background: var(--border); border-radius: 2px; }
+    .expo-scroll::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+    .expo-item {
+      flex-shrink: 0;
+      width: 160px;
+      scroll-snap-align: start;
+      cursor: pointer;
+    }
+    .expo-thumb {
+      position: relative;
+      aspect-ratio: 9/16;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .expo-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .expo-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.25);
+      transition: background 0.2s;
+    }
+    .expo-item:hover .expo-play { background: rgba(0,0,0,0.1); }
+
+    /* VIDEO MODAL */
+    .video-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .video-modal.open { display: flex; }
+    .video-modal video {
+      max-width: 400px;
+      width: 100%;
+      max-height: 90vh;
+      border-radius: 14px;
+      outline: none;
+    }
+    .video-modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: var(--white);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media(max-width:640px){
+      .vreview-item { width: 130px; }
+      .expo-item { width: 140px; }
+    }
+
     /* WHY SO CHEAP */
     #why-cheap { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .why-cheap-inner { max-width: 600px; margin: 0 auto; padding: 0 20px; }
@@ -1594,98 +1717,144 @@
   </div>
 </section>
 
-<!-- REVIEWS -->
+<!-- VIDEO REVIEWS -->
 <section id="avaliacoes">
   <div class="container">
     <div class="section-title">
-      <div class="tag">Avaliações reais</div>
-      <h2><em>847 clientes</em> aprovaram</h2>
-      <p>Avaliações verificadas de quem já instalou o PrimeCar 3D no seu carro.</p>
+      <div class="tag">Depoimentos em vídeo</div>
+      <h2><em>Clientes reais</em> mostrando o produto</h2>
+      <p>Sem filtro, sem script. Quem comprou filmou.</p>
     </div>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-header">
-          <img loading="lazy" class="review-avatar" src="videos/homem-1.jpg" alt="Lucas Almeida">
-          <div class="review-meta">
-            <div class="review-name">Lucas Almeida</div>
-            <div class="review-location">São Paulo, SP</div>
+    <div class="vreview-scroll">
+
+      <div class="vreview-item" onclick="openVideoModal('videos/video-homem-1.mp4')">
+        <div class="vreview-thumb">
+          <video src="videos/video-homem-1.mp4" muted loop playsinline preload="none"></video>
+          <div class="vreview-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="white" stroke="none"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
           </div>
         </div>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Instalei no meu Onix e o encaixe foi perfeito. Sem fresta nenhuma. O cheiro que eu esperava não veio — material limpo mesmo. Muito melhor do que os genéricos."</div>
-        <div class="review-date">Comprou em março de 2025</div>
-        <div class="verified-badge">✓ Compra verificada</div>
+        <div class="vreview-info">
+          <div class="review-stars">★★★★★</div>
+          <div class="vreview-name">Lucas A. — SP</div>
+        </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-header">
-          <img loading="lazy" class="review-avatar" src="videos/mulher-1.jpg" alt="Mariana Costa">
-          <div class="review-meta">
-            <div class="review-name">Mariana Costa</div>
-            <div class="review-location">Belo Horizonte, MG</div>
+      <div class="vreview-item" onclick="openVideoModal('videos/video-mulher-1.mp4')">
+        <div class="vreview-thumb">
+          <video src="videos/video-mulher-1.mp4" muted loop playsinline preload="none"></video>
+          <div class="vreview-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
           </div>
         </div>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Sempre tive medo de comprar tapete online porque sempre ficava torto. Esse ficou travado, sem mover. Meu carro parece outro por dentro agora."</div>
-        <div class="review-date">Comprou em fevereiro de 2025</div>
-        <div class="verified-badge">✓ Compra verificada</div>
+        <div class="vreview-info">
+          <div class="review-stars">★★★★★</div>
+          <div class="vreview-name">Mariana C. — MG</div>
+        </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-header">
-          <img loading="lazy" class="review-avatar" src="videos/homem-2.jpg" alt="Fernando Gomes">
-          <div class="review-meta">
-            <div class="review-name">Fernando Gomes</div>
-            <div class="review-location">Curitiba, PR</div>
+      <div class="vreview-item" onclick="openVideoModal('videos/video-homem-2.mp4')">
+        <div class="vreview-thumb">
+          <video src="videos/video-homem-2.mp4" muted loop playsinline preload="none"></video>
+          <div class="vreview-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
           </div>
         </div>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Derramei café no dia que instalei e não chegou nem perto do assoalho. A borda segura tudo mesmo. Valeu cada centavo."</div>
-        <div class="review-date">Comprou em janeiro de 2025</div>
-        <div class="verified-badge">✓ Compra verificada</div>
+        <div class="vreview-info">
+          <div class="review-stars">★★★★★</div>
+          <div class="vreview-name">Fernando G. — PR</div>
+        </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-header">
-          <img loading="lazy" class="review-avatar" src="videos/mulher-2.webp" alt="Ana Paula Ribeiro">
-          <div class="review-meta">
-            <div class="review-name">Ana Paula Ribeiro</div>
-            <div class="review-location">Rio de Janeiro, RJ</div>
+      <div class="vreview-item" onclick="openVideoModal('videos/video-mulher-2.mp4')">
+        <div class="vreview-thumb">
+          <video src="videos/video-mulher-2.mp4" muted loop playsinline preload="none"></video>
+          <div class="vreview-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
           </div>
         </div>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"O tapete do porta-malas veio exatamente do tamanho do meu Compass. Cobriu tudo direitinho. Cheiroso não, mas sem cheiro nenhum — o que é ótimo!"</div>
-        <div class="review-date">Comprou em abril de 2025</div>
-        <div class="verified-badge">✓ Compra verificada</div>
+        <div class="vreview-info">
+          <div class="review-stars">★★★★★</div>
+          <div class="vreview-name">Ana Paula R. — RJ</div>
+        </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-header">
-          <img loading="lazy" class="review-avatar" src="videos/homem-3.jpg" alt="Bruno Martins">
-          <div class="review-meta">
-            <div class="review-name">Bruno Martins</div>
-            <div class="review-location">Brasília, DF</div>
+      <div class="vreview-item" onclick="openVideoModal('videos/video-homem-3.mp4')">
+        <div class="vreview-thumb">
+          <video src="videos/video-homem-3.mp4" muted loop playsinline preload="none"></video>
+          <div class="vreview-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
           </div>
         </div>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Comprei para o meu HB20. A instalação foi em 5 minutos. Encaixou nos pontos de fábrica, não desliza nada. Qualidade muito acima do que eu esperava por esse preço."</div>
-        <div class="review-date">Comprou em março de 2025</div>
-        <div class="verified-badge">✓ Compra verificada</div>
+        <div class="vreview-info">
+          <div class="review-stars">★★★★★</div>
+          <div class="vreview-name">Bruno M. — DF</div>
+        </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-header">
-          <img loading="lazy" class="review-avatar" src="videos/mulher-3.png" alt="Camila Ferreira">
-          <div class="review-meta">
-            <div class="review-name">Camila Ferreira</div>
-            <div class="review-location">Porto Alegre, RS</div>
+      <div class="vreview-item" onclick="openVideoModal('videos/video-mulher-3.mp4')">
+        <div class="vreview-thumb">
+          <video src="videos/video-mulher-3.mp4" muted loop playsinline preload="none"></video>
+          <div class="vreview-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
           </div>
         </div>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Tinha um tapete genérico que escorregava toda hora e eu ficava nervosa. Agora com o PrimeCar ele fica fixo. Muito mais seguro e o carro ficou bem mais bonito por dentro."</div>
-        <div class="review-date">Comprou em fevereiro de 2025</div>
-        <div class="verified-badge">✓ Compra verificada</div>
+        <div class="vreview-info">
+          <div class="review-stars">★★★★★</div>
+          <div class="vreview-name">Camila F. — RS</div>
+        </div>
       </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPO VIDEOS -->
+<section style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-title">
+      <div class="tag">Veja o produto</div>
+      <h2>O tapete de <em>perto</em></h2>
+      <p>Detalhes que fotos não mostram — encaixe, borda, material e instalação.</p>
+    </div>
+    <div class="expo-scroll">
+
+      <div class="expo-item" onclick="openVideoModal('videos/expo-1.mp4')">
+        <div class="expo-thumb">
+          <video src="videos/expo-1.mp4" muted loop playsinline preload="none"></video>
+          <div class="expo-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="expo-item" onclick="openVideoModal('videos/expo-2.mp4')">
+        <div class="expo-thumb">
+          <video src="videos/expo-2.mp4" muted loop playsinline preload="none"></video>
+          <div class="expo-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="expo-item" onclick="openVideoModal('videos/expo-3.mp4')">
+        <div class="expo-thumb">
+          <video src="videos/expo-3.mp4" muted loop playsinline preload="none"></video>
+          <div class="expo-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="expo-item" onclick="openVideoModal('videos/expo-4.mp4')">
+        <div class="expo-thumb">
+          <video src="videos/expo-4.mp4" muted loop playsinline preload="none"></video>
+          <div class="expo-play">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="rgba(255,107,0,0.85)"/><polygon points="10,8 17,12 10,16" fill="white"/></svg>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2071,6 +2240,41 @@ function toggleFaq(btn) {
 }
 
 // =====================
+// VIDEO MODAL
+// =====================
+function openVideoModal(src) {
+  const modal = document.getElementById('video-modal');
+  const vid = document.getElementById('modal-video');
+  vid.src = src;
+  vid.load();
+  vid.play();
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVideoModal(e) {
+  if (e && e.target !== document.getElementById('video-modal') && !e.target.closest('.video-modal-close')) return;
+  const modal = document.getElementById('video-modal');
+  const vid = document.getElementById('modal-video');
+  vid.pause();
+  vid.src = '';
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal({ target: document.getElementById('video-modal') }); });
+
+// Lazy autoplay: start muted video when it enters viewport
+(function() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      const v = en.target;
+      if (en.isIntersecting) { v.play().catch(()=>{}); }
+      else { v.pause(); }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.vreview-thumb video, .expo-thumb video').forEach(v => io.observe(v));
+})();
+
+// =====================
 // NAV HAMBURGER
 // =====================
 function toggleNav() {
@@ -2096,6 +2300,14 @@ document.querySelectorAll('.benefit-card, .review-card, .kit-card').forEach(el =
   observer.observe(el);
 });
 </script>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="video-modal" onclick="closeVideoModal(event)">
+  <button class="video-modal-close" onclick="closeVideoModal()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <video id="modal-video" controls autoplay playsinline></video>
+</div>
 
 <script defer src="~flock.js" data-proxy-url="/~api/analytics"></script>
 </body>
