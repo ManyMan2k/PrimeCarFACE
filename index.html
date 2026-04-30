@@ -717,6 +717,67 @@
     .trust-icons span { display: flex; align-items: center; gap: 6px; }
     .trust-icons .ic { color: var(--green); }
 
+    /* POR QUE CONFIAR */
+    #confia { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .confia-inner { max-width: 700px; margin: 0 auto; padding: 0 20px; }
+    .confia-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media(max-width:600px){ .confia-grid { grid-template-columns: 1fr; } }
+    .confia-card {
+      background: rgba(255,107,0,0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .confia-icon {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      background: rgba(255,107,0,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .confia-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .confia-card p { font-size: 12px; color: var(--gray); line-height: 1.6; }
+    .confia-stats {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .confia-stat {
+      flex: 1;
+      text-align: center;
+      padding: 20px 16px;
+      border-right: 1px solid var(--border);
+    }
+    .confia-stat:last-child { border-right: none; }
+    .confia-stat strong { display: block; font-size: 22px; font-weight: 900; color: var(--orange); }
+    .confia-stat span { font-size: 11px; color: var(--gray); }
+    @media(max-width:480px){
+      .confia-stat strong { font-size: 18px; }
+      .confia-stat span { font-size: 10px; }
+    }
+    .confia-cnpj {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray);
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .confia-cnpj strong { color: var(--white); }
+
     /* FOOTER */
     footer {
       background: #050505;
@@ -1151,7 +1212,7 @@
     <a href="#kits">Nossos Tapetes</a>
     <a href="#avaliacoes">Avaliações</a>
     <a href="#garantia">Garantia</a>
-    <a href="#faq">Sobre Nós</a>
+    <a href="#confia">Sobre Nós</a>
     <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener">SAC</a>
   </nav>
 
@@ -1859,6 +1920,79 @@
   </div>
 </section>
 
+<!-- POR QUE CONFIAR -->
+<section id="confia">
+  <div class="confia-inner">
+    <div class="section-title">
+      <div class="tag">Transparência total</div>
+      <h2>Por que confiar <em>na PrimeCar?</em></h2>
+      <p>Somos uma empresa real, com estrutura real — não um site anônimo de dropshipping.</p>
+    </div>
+
+    <div class="confia-grid">
+      <div class="confia-card">
+        <div class="confia-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h3>Empresa registrada no Brasil</h3>
+          <p>CNPJ ativo, nota fiscal em toda compra, operando 100% dentro da lei brasileira de defesa do consumidor.</p>
+        </div>
+      </div>
+      <div class="confia-card">
+        <div class="confia-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <h3>Atendimento humano real</h3>
+          <p>Equipe de suporte pelo WhatsApp e e-mail. Respondemos em menos de 2 horas em dias úteis.</p>
+        </div>
+      </div>
+      <div class="confia-card">
+        <div class="confia-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </div>
+        <div>
+          <h3>Pagamento 100% seguro</h3>
+          <p>Checkout criptografado SSL. Aceitamos PIX, cartão em 12x sem juros e boleto — nenhum dado fica salvo.</p>
+        </div>
+      </div>
+      <div class="confia-card">
+        <div class="confia-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 2 2 4-4"/><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/></svg>
+        </div>
+        <div>
+          <h3>Produto com rastreamento</h3>
+          <p>Todo pedido sai com código de rastreio. Você acompanha cada etapa — do despacho até a sua porta.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="confia-stats">
+      <div class="confia-stat">
+        <strong>5.400+</strong>
+        <span>veículos protegidos</span>
+      </div>
+      <div class="confia-stat">
+        <strong>4.9★</strong>
+        <span>avaliação média</span>
+      </div>
+      <div class="confia-stat">
+        <strong>12 meses</strong>
+        <span>de garantia</span>
+      </div>
+      <div class="confia-stat">
+        <strong>7 dias</strong>
+        <span>para devolver</span>
+      </div>
+    </div>
+
+    <div class="confia-cnpj">
+      PrimeCar Brasil — <strong>contato@primecarbrasil.com</strong> &nbsp;|&nbsp; CNPJ: <strong>XX.XXX.XXX/0001-XX</strong> &nbsp;|&nbsp; Atendimento: seg–sex 9h–18h
+    </div>
+  </div>
+</section>
+
 <!-- GUARANTEE -->
 <section id="garantia" style="background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
@@ -1906,7 +2040,12 @@
           Qual o prazo de entrega e tem frete grátis?
           <span class="arrow">▼</span>
         </button>
-        <div class="faq-a">Sim, frete 100% grátis para todo o Brasil. O prazo é de 5 a 10 dias úteis após a confirmação do pagamento. Você recebe o código de rastreamento por e-mail assim que o pedido for despachado.</div>
+        <div class="faq-a">Sim, frete 100% grátis para todo o Brasil, sem valor mínimo. Prazo por região após confirmação do pagamento:<br><br>
+          <strong>Sudeste:</strong> 3–7 dias úteis<br>
+          <strong>Sul:</strong> 4–8 dias úteis<br>
+          <strong>Nordeste:</strong> 6–12 dias úteis<br>
+          <strong>Norte e Centro-Oeste:</strong> 8–15 dias úteis<br><br>
+          Você recebe o código de rastreamento por e-mail assim que o pedido for despachado.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
@@ -1946,7 +2085,7 @@
       <span><span class="ic">✓</span> Compra 100% segura</span>
       <span><span class="ic">✓</span> Dados protegidos SSL</span>
       <span><span class="ic">✓</span> Suporte por WhatsApp</span>
-      <span><span class="ic">✓</span> 847 clientes satisfeitos</span>
+      <span><span class="ic">✓</span> 5.400+ veículos protegidos</span>
     </div>
   </div>
 </section>
@@ -1978,7 +2117,7 @@
   </div>
   <div class="footer-bottom">
     <span>© 2025 PrimeCar Brasil. Todos os direitos reservados.</span>
-    <span>CNPJ: primecarbrasil.com</span>
+    <span>CNPJ: XX.XXX.XXX/0001-XX</span>
   </div>
 </footer>
 
