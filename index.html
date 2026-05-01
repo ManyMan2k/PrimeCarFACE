@@ -1157,6 +1157,135 @@
       .expo-item { width: 140px; }
     }
 
+    /* PAYMENT FLAGS */
+    .payment-flags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .pflag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      padding: 0 8px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .pflag-visa   { background:#1A1F71; color:#fff; }
+    .pflag-mc     { background:#252525; color:#fff; position:relative; overflow:visible; }
+    .pflag-mc::before, .pflag-mc::after {
+      content:''; position:absolute; width:14px; height:14px; border-radius:50%; top:50%; transform:translateY(-50%);
+    }
+    .pflag-mc::before { background:#EB001B; left:4px; }
+    .pflag-mc::after  { background:#F79E1B; right:4px; mix-blend-mode:normal; }
+    .pflag-mc span { position:relative; z-index:1; color:#fff; font-size:9px; margin: 0 4px; }
+    .pflag-elo    { background:#000; color:#FFCB05; }
+    .pflag-pix    { background:#00BDAE; color:#fff; }
+    .pflag-boleto { background:#2A2A2A; color:#aaa; }
+
+    /* BEFORE/AFTER SLIDER */
+    .ba-wrap {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: ew-resize;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    .ba-after img, .ba-before img {
+      display: block;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+    .ba-before {
+      position: absolute;
+      top: 0; left: 0; height: 100%;
+      overflow: hidden;
+      width: 50%;
+    }
+    .ba-before img { width: auto; max-width: none; height: 100%; }
+    .ba-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 3px;
+      background: var(--white);
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    }
+    .ba-handle-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    .ba-label {
+      position: absolute;
+      top: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .ba-label.antes { left: 12px; background: rgba(0,0,0,0.7); color: #ff6b6b; }
+    .ba-label.depois { right: 12px; background: rgba(0,0,0,0.7); color: var(--green); }
+
+    /* SPECS TABLE */
+    #specs { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .specs-table tr { border-bottom: 1px solid var(--border); }
+    .specs-table tr:last-child { border-bottom: none; }
+    .specs-table td {
+      padding: 14px 16px;
+      vertical-align: middle;
+    }
+    .specs-table td:first-child {
+      color: var(--gray);
+      font-weight: 500;
+      width: 45%;
+    }
+    .specs-table td:last-child {
+      color: var(--white);
+      font-weight: 600;
+    }
+    .specs-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .specs-highlight { color: var(--orange) !important; }
+    @media(max-width:480px){
+      .specs-table td { padding: 12px 12px; font-size: 12px; }
+    }
+
+    /* ONLINE BADGE */
+    .online-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #22C55E;
+      border-radius: 50%;
+      margin-right: 4px;
+      animation: pulse-green 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+      50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+
     /* WHY SO CHEAP */
     #why-cheap { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .why-cheap-inner { max-width: 600px; margin: 0 auto; padding: 0 20px; }
@@ -1213,7 +1342,7 @@
     <a href="#avaliacoes">Avaliações</a>
     <a href="#garantia">Garantia</a>
     <a href="#confia">Sobre Nós</a>
-    <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener">SAC</a>
+    <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener"><span class="online-dot"></span>SAC</a>
   </nav>
 
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
@@ -1228,7 +1357,7 @@
   <a href="#avaliacoes" onclick="closeNav()">Avaliações</a>
   <a href="#garantia" onclick="closeNav()">Garantia</a>
   <a href="#faq" onclick="closeNav()">Sobre Nós</a>
-  <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener" onclick="closeNav()">💬 Falar com o SAC</a>
+  <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener" onclick="closeNav()"><span class="online-dot"></span>💬 Falar com o SAC — online agora</a>
 </nav>
 
 <!-- HERO -->
@@ -1328,6 +1457,13 @@
           <span><span class="ic">✓</span> Garantia 12 meses</span>
           <span><span class="ic">✓</span> SSL seguro</span>
         </div>
+        <div class="payment-flags">
+          <span class="pflag pflag-visa">VISA</span>
+          <span class="pflag pflag-mc"><span>MC</span></span>
+          <span class="pflag pflag-elo">ELO</span>
+          <span class="pflag pflag-pix">PIX</span>
+          <span class="pflag pflag-boleto">BOLETO</span>
+        </div>
       </div>
 
       <!-- KIT COMPLETO -->
@@ -1363,6 +1499,13 @@
           <span><span class="ic">✓</span> Frete Grátis</span>
           <span><span class="ic">✓</span> Garantia 12 meses</span>
           <span><span class="ic">✓</span> SSL seguro</span>
+        </div>
+        <div class="payment-flags">
+          <span class="pflag pflag-visa">VISA</span>
+          <span class="pflag pflag-mc"><span>MC</span></span>
+          <span class="pflag pflag-elo">ELO</span>
+          <span class="pflag pflag-pix">PIX</span>
+          <span class="pflag pflag-boleto">BOLETO</span>
         </div>
       </div>
     </div>
@@ -1419,32 +1562,47 @@
   </div>
 </section>
 
-<!-- ANTES DEPOIS -->
-<section>
+<!-- ANTES DEPOIS SLIDER -->
+<section id="antes-depois">
   <div class="container">
     <div class="section-title">
       <div class="tag">Transformação real</div>
-      <h2>O que acontece com seu assoalho <em>sem proteção</em></h2>
-      <p>Umidade, sujeira e desgaste destroem o assoalho original — que custa milhares para restaurar.</p>
+      <h2>Arraste e veja a <em>diferença</em></h2>
+      <p>Deslize o comparador para ver o assoalho com e sem o PrimeCar 3D.</p>
     </div>
-    <div class="antes-depois-grid">
-      <div class="ad-card">
-        <span class="ad-label antes">Sem PrimeCar</span>
-        <img loading="lazy" src="assets/antes1-4dfdGCTW.webp" alt="Antes — assoalho sem proteção">
+
+    <div class="ba-wrap" id="ba1">
+      <div class="ba-after">
+        <img loading="lazy" src="assets/depois1-BhSJItsI.webp" alt="Com PrimeCar 3D instalado">
       </div>
-      <div class="ad-card">
-        <span class="ad-label depois">Com PrimeCar 3D</span>
-        <img loading="lazy" src="assets/depois1-BhSJItsI.webp" alt="Depois — tapete bandeja 3D instalado">
+      <div class="ba-before" id="ba1-before">
+        <img loading="lazy" src="assets/antes1-4dfdGCTW.webp" alt="Sem proteção">
       </div>
-      <div class="ad-card">
-        <span class="ad-label antes">Tapete genérico</span>
-        <img loading="lazy" src="assets/antes2-DUbqAbXf.webp" alt="Antes — tapete genérico com fresta">
+      <div class="ba-line" id="ba1-line">
+        <div class="ba-handle-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/><polyline points="9 6 15 12 9 18" transform="translate(6,0)"/></svg>
+        </div>
       </div>
-      <div class="ad-card">
-        <span class="ad-label depois">Encaixe milimétrico</span>
-        <img loading="lazy" src="assets/depois2-B2Vnq3Ah.webp" alt="Depois — encaixe perfeito">
-      </div>
+      <span class="ba-label antes">Sem PrimeCar</span>
+      <span class="ba-label depois">Com PrimeCar 3D</span>
     </div>
+
+    <div class="ba-wrap" id="ba2" style="margin-top:20px;">
+      <div class="ba-after">
+        <img loading="lazy" src="assets/depois2-B2Vnq3Ah.webp" alt="Encaixe milimétrico">
+      </div>
+      <div class="ba-before" id="ba2-before">
+        <img loading="lazy" src="assets/antes2-DUbqAbXf.webp" alt="Tapete genérico com fresta">
+      </div>
+      <div class="ba-line" id="ba2-line">
+        <div class="ba-handle-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/><polyline points="9 6 15 12 9 18" transform="translate(6,0)"/></svg>
+        </div>
+      </div>
+      <span class="ba-label antes">Tapete genérico</span>
+      <span class="ba-label depois">Encaixe milimétrico</span>
+    </div>
+
   </div>
 </section>
 
@@ -1633,6 +1791,75 @@
       </div>
 
     </div><!-- /qt-panels -->
+  </div>
+</section>
+
+<!-- SPECS -->
+<section id="specs">
+  <div class="container">
+    <div class="section-title">
+      <div class="tag">Especificações técnicas</div>
+      <h2>Material e <em>construção</em></h2>
+      <p>Para quem quer saber exatamente o que está comprando.</p>
+    </div>
+    <table class="specs-table">
+      <tr>
+        <td>Material</td>
+        <td class="specs-highlight">TPE — Termoplástico Elastômero de alta densidade</td>
+      </tr>
+      <tr>
+        <td>Espessura</td>
+        <td>7 mm</td>
+      </tr>
+      <tr>
+        <td>Altura da borda</td>
+        <td class="specs-highlight">3 cm — retém líquidos, lama e detritos</td>
+      </tr>
+      <tr>
+        <td>Temperatura suportada</td>
+        <td>−40°C a +80°C (não amolece no verão, não endurece no inverno)</td>
+      </tr>
+      <tr>
+        <td>Impermeabilidade</td>
+        <td class="specs-highlight">100% — nenhum líquido passa pelo assoalho</td>
+      </tr>
+      <tr>
+        <td>Fixação</td>
+        <td>Ilhós de encaixe nos pinos originais de fábrica do veículo</td>
+      </tr>
+      <tr>
+        <td>Odor</td>
+        <td class="specs-highlight">Zero — TPE é inodoro (sem cheiro de borracha)</td>
+      </tr>
+      <tr>
+        <td>Peso médio (kit completo)</td>
+        <td>~2,8 kg</td>
+      </tr>
+      <tr>
+        <td>Cores disponíveis</td>
+        <td>Preto, Cinza, Bege</td>
+      </tr>
+      <tr>
+        <td>Limpeza</td>
+        <td>Água e sabão — tira e lava em menos de 2 minutos</td>
+      </tr>
+      <tr>
+        <td>Durabilidade estimada</td>
+        <td class="specs-highlight">8–10 anos com uso normal</td>
+      </tr>
+      <tr>
+        <td>Cobertura (kit completo)</td>
+        <td>Motorista + Passageiro + 2ª fila + Porta-malas — 5 peças</td>
+      </tr>
+      <tr>
+        <td>Garantia do fabricante</td>
+        <td class="specs-highlight">12 meses contra defeitos de fabricação</td>
+      </tr>
+      <tr>
+        <td>Modelos compatíveis</td>
+        <td>+500 modelos — fabricado sob medida para o seu veículo</td>
+      </tr>
+    </table>
   </div>
 </section>
 
@@ -2079,7 +2306,7 @@
     <p>Frete grátis • 12x sem juros • Garantia de 12 meses • Encaixe perfeito garantido</p>
     <div class="cta-btns">
       <a href="#kits" class="btn-primary">Escolher meu kit agora →</a>
-      <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="btn-secondary">💬 Falar no WhatsApp</a>
+      <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="btn-secondary"><span class="online-dot"></span>💬 Falar no WhatsApp — online agora</a>
     </div>
     <div class="trust-icons">
       <span><span class="ic">✓</span> Compra 100% segura</span>
@@ -2123,7 +2350,7 @@
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-mobile-cta">
-  <a href="#kits">🛒 Comprar agora — a partir de R$ 79,90</a>
+  <a href="#kits" id="sticky-cta-link">🛒 Comprar agora — a partir de R$ 79,90</a>
 </div>
 
 <script>
@@ -2228,8 +2455,10 @@ function onAnoChange() {
   if (!ano) return;
   const marca = selMarca.value;
   const modelo = selModelo.value;
-  // Dispara o loading assim que o ano é selecionado — parece consulta real
   triggerUrgency(`${marca} ${modelo} ${ano}`);
+  // Update sticky CTA with vehicle name
+  const stickyCta = document.getElementById('sticky-cta-link');
+  if (stickyCta) stickyCta.textContent = `🛒 Ver tapete para ${marca} ${modelo} ${ano} →`;
 }
 
 function verOpcoes() {
@@ -2427,6 +2656,39 @@ function closeNav() {
   document.getElementById('icon-menu').style.display = 'block';
   document.getElementById('icon-close').style.display = 'none';
 }
+
+// =====================
+// BEFORE/AFTER SLIDER
+// =====================
+function initBaSlider(wrapperId, beforeId, lineId) {
+  const wrap = document.getElementById(wrapperId);
+  const before = document.getElementById(beforeId);
+  const line = document.getElementById(lineId);
+  if (!wrap || !before || !line) return;
+
+  function setPos(clientX) {
+    const rect = wrap.getBoundingClientRect();
+    let pct = (clientX - rect.left) / rect.width;
+    pct = Math.max(0.04, Math.min(0.96, pct));
+    before.style.width = (pct * 100) + '%';
+    line.style.left = (pct * 100) + '%';
+  }
+
+  // Mouse
+  wrap.addEventListener('mousedown', e => {
+    setPos(e.clientX);
+    const onMove = e => setPos(e.clientX);
+    const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+
+  // Touch
+  wrap.addEventListener('touchstart', e => { setPos(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+  wrap.addEventListener('touchmove', e => { setPos(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+}
+initBaSlider('ba1', 'ba1-before', 'ba1-line');
+initBaSlider('ba2', 'ba2-before', 'ba2-line');
 
 // =====================
 // SCROLL ANIMATIONS
