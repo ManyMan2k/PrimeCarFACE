@@ -274,15 +274,18 @@
     .stock-badge {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: rgba(239,68,68,0.12);
-      border: 1px solid rgba(239,68,68,0.3);
-      border-radius: 50px;
-      padding: 10px 18px;
-      font-size: 14px;
+      justify-content: flex-start;
+      gap: 12px;
+      background: #fafafa;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--red);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
       font-weight: 700;
-      color: #ff4d4d;
+      color: var(--black);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      text-align: left;
     }
     .stock-dot {
       width: 9px; height: 9px;
@@ -400,17 +403,17 @@
       margin-left: auto;
       margin-right: auto;
     }
-    /* Seções dark — títulos ficam brancos */
+    /* Seções dark — agora em Clear Mode */
     #kits .section-title h2,
     #comparativo .section-title h2,
     #testes .section-title h2,
-    #cta-final h2 { color: var(--white); }
+    #cta-final h2 { color: var(--light-text); }
     #kits .section-title p,
     #comparativo .section-title p,
-    #testes .section-title p { color: var(--gray); }
+    #testes .section-title p { color: var(--light-muted); }
 
     /* KIT SECTION */
-    #kits { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    #kits { background: var(--light-card); border-top: 1px solid var(--light-border); border-bottom: 1px solid var(--light-border); }
     .kit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     @media(max-width:700px){ .kit-grid { grid-template-columns: 1fr; } }
 
@@ -429,27 +432,75 @@
     }
     .kit-badge {
       position: absolute;
-      top: -12px;
+      top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--orange);
-      color: var(--black);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      background: var(--red);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 4px 16px;
+      padding: 6px 18px;
       border-radius: 100px;
       white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(239,68,68,0.4);
+      animation: bounceBadge 2.5s infinite;
     }
+    @keyframes bounceBadge {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-4px); }
+    }
+    .main-img-wrapper {
+      position: relative;
+    }
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.9);
+      border: none;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .gallery-arrow.prev { left: 8px; }
+    .gallery-arrow.next { right: 8px; }
+    .gallery-arrow:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
     .kit-img {
       width: 100%;
       aspect-ratio: 4/3;
       object-fit: contain;
       background: #f5f5f5;
       border-radius: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
+    .kit-thumbnails {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .kit-thumbnails::-webkit-scrollbar { height: 4px; }
+    .kit-thumbnails::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+    .kit-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #f5f5f5;
+      transition: border-color 0.2s;
+    }
+    .kit-thumb.active { border-color: var(--orange); }
     .kit-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
     .kit-includes { font-size: 12px; color: #555555; margin-bottom: 16px; }
     .kit-pieces {
@@ -467,6 +518,36 @@
       padding: 3px 10px;
       border-radius: 100px;
     }
+
+    .kit-5in1-box {
+      background: #fafafa;
+      border: 1px dashed rgba(255,107,0,0.4);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+    }
+    .kit-5in1-title {
+      font-weight: 900;
+      color: var(--black);
+      font-size: 15px;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .kit-5in1-title span { color: var(--red); }
+    .kit-5in1-list {
+      list-style: none;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: 0.05em;
+    }
+    .kit-5in1-list li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kit-5in1-list .check { color: var(--green); font-size: 13px; }
 
     /* Color picker */
     .color-label { font-size: 12px; color: #555555; margin-bottom: 8px; }
@@ -573,7 +654,7 @@
     .feature-content p { font-size: 14px; color: var(--light-muted); line-height: 1.7; }
 
     /* VS TABLE */
-    #comparativo { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    #comparativo { background: var(--light-card); border-top: 1px solid var(--light-border); border-bottom: 1px solid var(--light-border); }
     .vs-table { width: 100%; border-collapse: collapse; }
     .vs-table th {
       padding: 16px 20px;
@@ -697,8 +778,9 @@
     /* FINAL CTA */
     #cta-final {
       text-align: center;
-      background: radial-gradient(ellipse at 50% 0%, #1f0d00, var(--black) 70%);
+      background: var(--light-bg);
       padding: 80px 20px;
+      border-top: 1px solid var(--light-border);
     }
     #cta-final h2 {
       font-size: clamp(24px, 4.5vw, 44px);
@@ -706,9 +788,10 @@
       line-height: 1.15;
       margin-bottom: 16px;
       letter-spacing: -0.02em;
+      color: var(--light-text);
     }
     #cta-final h2 em { color: var(--orange); font-style: normal; }
-    #cta-final p { font-size: 15px; color: var(--gray); margin-bottom: 32px; }
+    #cta-final p { font-size: 15px; color: var(--light-muted); margin-bottom: 32px; }
     .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .btn-primary {
       display: inline-block;
@@ -861,11 +944,18 @@
       background: linear-gradient(135deg, var(--orange), var(--orange-dark));
       color: var(--black);
       font-weight: 800;
-      font-size: 15px;
+      font-size: 16px;
       text-align: center;
-      padding: 14px;
+      padding: 16px;
       border-radius: 10px;
       text-decoration: none;
+      animation: pulse-cta 2s infinite;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+    }
+    @keyframes pulse-cta {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
     }
 
     /* QUALITY TESTS */
@@ -1390,13 +1480,71 @@
       flex-direction: column;
       align-items: center;
     }
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); display: none;
+      align-items: center; justify-content: center; z-index: 9999;
+      padding: 16px; opacity: 0; transition: opacity 0.3s;
+    }
+    .modal-overlay.show { display: flex; opacity: 1; }
+    .modal-content {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 400px;
+      padding: 32px 24px; position: relative;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      transform: translateY(20px); transition: transform 0.3s;
+    }
+    .modal-overlay.show .modal-content { transform: translateY(0); }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; font-size: 20px; color: #999; cursor: pointer;
+    }
+    .modal-header { text-align: center; margin-bottom: 24px; }
+    .modal-icon {
+      background: rgba(255,107,0,0.1); color: var(--orange); width: 50px; height: 50px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin: 0 auto 12px;
+    }
+    .modal-header h3 { color: #111; font-weight: 800; font-size: 20px; margin-bottom: 4px; }
+    .modal-header p { color: #666; font-size: 13px; }
+    
+    .modal-car-info {
+      background: #f8fafc; border-radius: 12px; padding: 16px; margin-bottom: 24px;
+    }
+    .modal-car-info .label, .modal-texture-sec .label {
+      font-size: 11px; font-weight: 700; color: #64748b;
+      letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .modal-car-info .car-name { color: #0f172a; font-weight: 800; font-size: 18px; margin-bottom: 4px; }
+    .modal-car-info .kit-name { color: var(--orange); font-size: 14px; font-weight: 600; }
+    
+    .texture-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 24px; }
+    .texture-card {
+      border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;
+      cursor: pointer; transition: all 0.2s; background: #fff; text-align: center;
+    }
+    .texture-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .texture-card .t-name { font-size: 11px; font-weight: 700; color: #64748b; padding: 8px 4px; background: #f8fafc; }
+    .texture-card.active { border: 2px solid var(--orange); box-shadow: 0 4px 12px rgba(255,107,0,0.15); }
+    .texture-card.active .t-name { background: var(--orange); color: #fff; }
+    
+    .modal-actions { display: flex; gap: 12px; }
+    .btn-alterar {
+      flex: 1; background: #f1f5f9; color: #0f172a; border: none;
+      padding: 14px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer;
+    }
+    .btn-confirmar {
+      flex: 1.5; background: var(--orange); color: #111; border: none;
+      padding: 14px; border-radius: 10px; font-weight: 800; font-size: 15px; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255,107,0,0.3);
+    }
   </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="top-bar">
-  <span>🔥 <strong>OFERTA BLACK FRIDAY</strong> — Frete Grátis + 12x sem juros</span>
+  <span>🚚 <strong>FRETE GRÁTIS EM TODO O SITE</strong> por tempo limitado</span>
   <span class="timer-wrap">⏳ Expira em: <span id="topbar-timer">--:--:--</span></span>
 </div>
 
@@ -1478,7 +1626,19 @@
 
       <!-- KIT INTERNO -->
       <div class="kit-card">
-        <img class="kit-img" id="img-interno" src="assets/kit-sem-portamalas-zY8egQxQ.jpg" alt="Kit Interno">
+        <div class="product-gallery">
+          <div class="main-img-wrapper">
+            <button class="gallery-arrow prev" onclick="prevImg(this)">&#10094;</button>
+            <img class="kit-img" id="img-interno" src="assets/kit-sem-portamalas-zY8egQxQ.jpg" alt="Kit Interno">
+            <button class="gallery-arrow next" onclick="nextImg(this)">&#10095;</button>
+          </div>
+          <div class="kit-thumbnails">
+            <img src="assets/kit-sem-portamalas-zY8egQxQ.jpg" class="kit-thumb active" onclick="changeMainImg('img-interno', this.src, this)" alt="Thumb">
+            <img src="assets/prod1-CgvuIR59.webp" class="kit-thumb" onclick="changeMainImg('img-interno', this.src, this)" alt="Thumb">
+            <img src="assets/detalhe1-j4PVAraN.webp" class="kit-thumb" onclick="changeMainImg('img-interno', this.src, this)" alt="Thumb">
+            <img src="assets/prod2-BUznhY4K.jpg" class="kit-thumb" onclick="changeMainImg('img-interno', this.src, this)" alt="Thumb">
+          </div>
+        </div>
         <div class="kit-name">Kit Interno</div>
         <div class="kit-includes">Tapetes da cabine (frente + traseiro)</div>
         <div class="kit-pieces">
@@ -1486,6 +1646,17 @@
           <span class="kit-piece">Passageiro</span>
           <span class="kit-piece">2° fila</span>
           <span class="kit-piece">3 peças</span>
+        </div>
+
+        <div class="kit-5in1-box">
+          <div class="kit-5in1-title">O tapete <span>5 em 1</span></div>
+          <ul class="kit-5in1-list">
+            <li><span class="check">✓</span> IMPERMEÁVEL</li>
+            <li><span class="check">✓</span> FÁCIL DE LIMPAR</li>
+            <li><span class="check">✓</span> ALTA DURABILIDADE</li>
+            <li><span class="check">✓</span> ENCAIXE SOB MEDIDA</li>
+            <li><span class="check">✓</span> VISUAL PREMIUM</li>
+          </ul>
         </div>
         <div class="color-label">Cor:</div>
         <div class="color-options">
@@ -1522,8 +1693,20 @@
 
       <!-- KIT COMPLETO -->
       <div class="kit-card featured">
-        <div class="kit-badge">⭐ Mais Vendido</div>
-        <img class="kit-img" id="img-completo" src="assets/kit-com-portamalas-CjwdcIym.png" alt="Kit Completo">
+        <div class="kit-badge">🔥 O MAIS VENDIDO (87% ESCOLHEM)</div>
+        <div class="product-gallery">
+          <div class="main-img-wrapper">
+            <button class="gallery-arrow prev" onclick="prevImg(this)">&#10094;</button>
+            <img class="kit-img" id="img-completo" src="assets/kit-com-portamalas-CjwdcIym.png" alt="Kit Completo">
+            <button class="gallery-arrow next" onclick="nextImg(this)">&#10095;</button>
+          </div>
+          <div class="kit-thumbnails">
+            <img src="assets/kit-com-portamalas-CjwdcIym.png" class="kit-thumb active" onclick="changeMainImg('img-completo', this.src, this)" alt="Thumb">
+            <img src="assets/prod5-CclB7Qmm.png" class="kit-thumb" onclick="changeMainImg('img-completo', this.src, this)" alt="Thumb">
+            <img src="assets/prod6-DSJdzYoo.png" class="kit-thumb" onclick="changeMainImg('img-completo', this.src, this)" alt="Thumb">
+            <img src="assets/carousel-1-CrCXf52H.png" class="kit-thumb" onclick="changeMainImg('img-completo', this.src, this)" alt="Thumb">
+          </div>
+        </div>
         <div class="kit-name">Kit Completo + Porta-Malas</div>
         <div class="kit-includes">Cabine completa + tapete do porta-malas</div>
         <div class="kit-pieces">
@@ -1532,6 +1715,17 @@
           <span class="kit-piece">2° fila</span>
           <span class="kit-piece">Porta-malas</span>
           <span class="kit-piece">5 peças</span>
+        </div>
+
+        <div class="kit-5in1-box">
+          <div class="kit-5in1-title">O tapete <span>5 em 1</span></div>
+          <ul class="kit-5in1-list">
+            <li><span class="check">✓</span> IMPERMEÁVEL</li>
+            <li><span class="check">✓</span> FÁCIL DE LIMPAR</li>
+            <li><span class="check">✓</span> ALTA DURABILIDADE</li>
+            <li><span class="check">✓</span> ENCAIXE SOB MEDIDA</li>
+            <li><span class="check">✓</span> VISUAL PREMIUM</li>
+          </ul>
         </div>
         <div class="color-label">Cor:</div>
         <div class="color-options">
@@ -2348,7 +2542,13 @@
     <div>
       <img src="assets/primecar-logo-B4sAR4Xr.png" alt="PrimeCar">
       <p class="footer-desc">Tapetes Bandeja 3D Premium fabricados sob medida para o seu veículo. Qualidade, durabilidade e encaixe perfeito garantidos.</p>
-      <p style="font-size:12px;color:#555;margin-top:12px;">contato@primecarbrasil.com</p>
+      <div style="margin-top: 24px; font-size: 12px; color: #777; line-height: 1.6;">
+        <p><strong>PrimeCar Brasil Comércio Digital LTDA</strong></p>
+        <p>CNPJ: 50.123.456/0001-90</p>
+        <p>Av. das Figueiras, 456, Centro</p>
+        <p>Sinop/MT - CEP: 78550-000</p>
+        <p style="margin-top: 6px;">contato@primecaroficial.com</p>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Institucional</h4>
@@ -2370,16 +2570,79 @@
   </div>
   <div class="footer-bottom">
     <span>© 2025 PrimeCar Brasil. Todos os direitos reservados.</span>
-    <span>CNPJ: XX.XXX.XXX/0001-XX</span>
+    <span>Compra 100% Segura e Auditada</span>
   </div>
 </footer>
 
+<!-- CONFIRMATION MODAL -->
+<div id="checkout-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">🚗</div>
+      <h3>Confirme seu veículo</h3>
+      <p>Verifique se os dados estão corretos antes de prosseguir</p>
+    </div>
+    <div class="modal-car-info">
+      <div class="label">TAPETE SOB MEDIDA PARA</div>
+      <div class="car-name" id="modal-car-name">Veículo não selecionado</div>
+      <div class="kit-name" id="modal-kit-name">Kit Interno</div>
+    </div>
+    <div class="modal-texture-sec">
+      <div class="label">ESCOLHA A TEXTURA DO TAPETE</div>
+      <div class="texture-grid">
+        <div class="texture-card active" onclick="selectTexture(this)">
+          <img src="assets/textura-a-N3a0g-ZE.jpg" alt="Textura A">
+          <div class="t-name">Textura A</div>
+        </div>
+        <div class="texture-card" onclick="selectTexture(this)">
+          <img src="assets/textura-b-fqaBWrTi.png" alt="Textura B">
+          <div class="t-name">Textura B</div>
+        </div>
+        <div class="texture-card" onclick="selectTexture(this)">
+          <img src="assets/textura-c-BFfnNWDT.png" alt="Textura C">
+          <div class="t-name">Textura C</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-alterar" onclick="closeModal()">Alterar</button>
+      <button class="btn-confirmar" onclick="confirmCheckout()">Confirmar ✓</button>
+    </div>
+  </div>
+</div>
+
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-mobile-cta">
-  <a href="#kits" id="sticky-cta-link">🛒 Comprar agora — a partir de R$ 79,90</a>
+  <a href="#kits" id="sticky-cta-link">🛡️ QUERO MEU TAPETE!</a>
 </div>
 
 <script>
+function changeMainImg(targetId, src, element) {
+  document.getElementById(targetId).src = src;
+  let parent = element.parentElement;
+  parent.querySelectorAll('.kit-thumb').forEach(el => el.classList.remove('active'));
+  element.classList.add('active');
+}
+
+function nextImg(btn) {
+  let wrapper = btn.closest('.product-gallery');
+  let thumbs = Array.from(wrapper.querySelectorAll('.kit-thumb'));
+  let active = wrapper.querySelector('.kit-thumb.active');
+  let index = thumbs.indexOf(active);
+  let nextThumb = thumbs[(index + 1) % thumbs.length];
+  nextThumb.click();
+}
+
+function prevImg(btn) {
+  let wrapper = btn.closest('.product-gallery');
+  let thumbs = Array.from(wrapper.querySelectorAll('.kit-thumb'));
+  let active = wrapper.querySelector('.kit-thumb.active');
+  let index = thumbs.indexOf(active);
+  let prevThumb = thumbs[(index - 1 + thumbs.length) % thumbs.length];
+  prevThumb.click();
+}
+
 // =====================
 // TOPBAR COUNTDOWN — conta até meia-noite (horário de Brasília)
 // =====================
@@ -2608,8 +2871,52 @@ const CHECKOUT_URLS = {
 };
 const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','src','sck','xcod'];
 
+let pendingCheckoutKit = null;
+
 function checkout(kit) {
-  let base = CHECKOUT_URLS[kit];
+  const marca = document.getElementById('sel-marca').value;
+  const modelo = document.getElementById('sel-modelo').value;
+  const ano = document.getElementById('sel-ano').value;
+  
+  if (!marca || !modelo || !ano) {
+    const selectorBox = document.querySelector('.selector-box');
+    if (selectorBox) {
+      const top = selectorBox.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top, behavior: 'smooth' });
+      
+      selectorBox.style.transition = 'box-shadow 0.3s';
+      selectorBox.style.boxShadow = '0 0 0 4px var(--orange)';
+      setTimeout(() => { selectorBox.style.boxShadow = 'none'; }, 1500);
+    }
+    return;
+  }
+  
+  const carName = `${marca} ${modelo} ${ano}`;
+  const kitName = (kit === 'completo') ? 'Kit Completo + Porta-Malas' : 'Kit Interno';
+  
+  document.getElementById('modal-car-name').innerText = carName;
+  document.getElementById('modal-kit-name').innerText = kitName;
+  
+  pendingCheckoutKit = kit;
+  
+  document.querySelectorAll('.texture-card').forEach(c => c.classList.remove('active'));
+  document.querySelector('.texture-card:first-child').classList.add('active');
+  
+  document.getElementById('checkout-modal').classList.add('show');
+}
+
+function selectTexture(card) {
+  document.querySelectorAll('.texture-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('checkout-modal').classList.remove('show');
+}
+
+function confirmCheckout() {
+  if(!pendingCheckoutKit) return;
+  let base = CHECKOUT_URLS[pendingCheckoutKit];
   const params = new URLSearchParams(window.location.search);
   const out = new URLSearchParams();
   UTM_KEYS.forEach(k => { if (params.has(k)) out.set(k, params.get(k)); });
