@@ -1327,13 +1327,50 @@
       border-radius: 12px;
       background: rgba(255,255,255,0.02);
     }
+
+    /* TOP BAR */
+    .top-bar {
+      background: linear-gradient(90deg, #1a0600, #2a0e00, #1a0600);
+      border-bottom: 1px solid rgba(255,107,0,0.3);
+      text-align: center;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      position: relative;
+      z-index: 101;
+    }
+    .top-bar strong { color: var(--orange); }
+    .top-bar .timer-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 10px;
+      background: rgba(255,107,0,0.15);
+      border: 1px solid rgba(255,107,0,0.4);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+    }
+    @keyframes blink-anim { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .blink { animation: blink-anim 1s step-end infinite; }
+    @media(max-width:560px){
+      .top-bar { font-size: 11.5px; padding: 8px 12px; }
+      .top-bar .timer-wrap { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="top-bar">
-  <span>🔥 <strong>OFERTA RELÂMPAGO</strong> — Frete Grátis + 12x sem juros • Últimas unidades neste preço <span class="blink">⚡</span></span>
+  <span>🔥 <strong>OFERTA BLACK FRIDAY</strong> — Frete Grátis + 12x sem juros</span>
+  <span class="timer-wrap">⏳ Expira em: <span id="topbar-timer">--:--:--</span></span>
 </div>
 
 <!-- HEADER -->
@@ -1395,11 +1432,11 @@
     </button>
   </div>
 
-  <!-- STOCK BADGE — sempre visível -->
+  <!-- STOCK BADGE — ativa após seleção do modelo -->
   <div id="urgency-stock-row">
-    <div class="stock-badge">
+    <div class="stock-badge" id="stock-badge">
       <div class="stock-dot"></div>
-      <span>🔥 Últimas <span class="stock-count" id="stock-num">14</span> unidades nesse preço!</span>
+      <span id="stock-text">🔥 Selecione seu carro para ver disponibilidade</span>
     </div>
   </div>
 </section>
@@ -1439,7 +1476,7 @@
           <div class="price-economy">Você economiza R$ 53,27</div>
         </div>
         <button class="btn-checkout" onclick="checkout('interno')">
-          Comprar Kit Interno →
+          🛡️ Garantir Kit Interno →
         </button>
         <div class="kit-guarantees">
           <span><span class="ic">✓</span> Frete Grátis</span>
@@ -1482,7 +1519,7 @@
           <div class="price-economy">Você economiza R$ 79,27</div>
         </div>
         <button class="btn-checkout" onclick="checkout('completo')">
-          Comprar Kit Completo →
+          🛡️ Garantir Kit Completo →
         </button>
         <div class="kit-guarantees">
           <span><span class="ic">✓</span> Frete Grátis</span>
@@ -1542,8 +1579,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
         </div>
         <div class="why-reason-text">
-          <h3>Preço promocional — não vai durar</h3>
-          <p>Estamos em fase de expansão e queremos conquistar novos clientes com esse preço especial. Quando atingirmos nossa meta de vendas, ele volta ao preço cheio.</p>
+          <h3>Desconto de lote — mantido pelo volume</h3>
+          <p>Quanto mais kits saem por mês, mais barato negociamos com a fábrica — e repassamos essa economia direto pra você. É o volume que sustenta esse preço, não um desconto temporário.</p>
         </div>
       </div>
     </div>
@@ -2313,6 +2350,32 @@
 
 <script>
 // =====================
+// TOPBAR COUNTDOWN — conta até meia-noite (horário de Brasília)
+// =====================
+(function() {
+  const el = document.getElementById('topbar-timer');
+  if (!el) return;
+
+  function tick() {
+    // Hora atual em Brasília (UTC-3)
+    const now    = new Date();
+    const brt    = new Date(now.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+    const midnight = new Date(brt);
+    midnight.setHours(24, 0, 0, 0);
+
+    let diff = Math.max(0, Math.floor((midnight - brt) / 1000));
+    const h  = String(Math.floor(diff / 3600)).padStart(2, '0');
+    diff    %= 3600;
+    const m  = String(Math.floor(diff / 60)).padStart(2, '0');
+    const s  = String(diff % 60).padStart(2, '0');
+    el.textContent = `${h}:${m}:${s}`;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// =====================
 // VEHICLE DATA
 // =====================
 const VEICULOS = {
@@ -2408,11 +2471,15 @@ function onAnoChange() {
   const ano = selAno.value;
   btnVer.disabled = !ano;
   if (!ano) return;
-  const marca = selMarca.value;
+  const marca  = selMarca.value;
   const modelo = selModelo.value;
-  // Update sticky CTA with vehicle name
+
+  // Sticky CTA
   const stickyCta = document.getElementById('sticky-cta-link');
   if (stickyCta) stickyCta.textContent = `🛒 Ver tapete para ${marca} ${modelo} ${ano} →`;
+
+  // Dispara urgência por modelo assim que o usuário completa a seleção
+  startStockCountdown(marca, modelo);
 }
 
 function verOpcoes() {
@@ -2421,37 +2488,63 @@ function verOpcoes() {
 }
 
 // =====================
-// URGENCY — estoque sempre visível
+// URGENCY — estoque por modelo (ativa após seleção)
 // =====================
+let stockTimers = [];
+let currentStock = 0;
+let stockStarted = false;
 
-// Estoque — começa em 14, diminui conforme schedule
-const STOCK_KEY = 'pc_stock_count';
-const STOCK_MIN = 7;
-let stockNum = parseInt(sessionStorage.getItem(STOCK_KEY)) || 14;
-
-function updateStockDisplay() {
-  document.getElementById('stock-num').textContent = stockNum;
+// Gera número determinístico 4–6 a partir da string do modelo
+function modelToStock(modelo) {
+  let hash = 0;
+  for (let i = 0; i < modelo.length; i++) {
+    hash = (hash * 31 + modelo.charCodeAt(i)) >>> 0;
+  }
+  return 4 + (hash % 3); // resultado: 4, 5 ou 6
 }
-function decrementStock() {
-  if (stockNum > STOCK_MIN) {
-    stockNum--;
-    sessionStorage.setItem(STOCK_KEY, stockNum);
-    updateStockDisplay();
+
+function renderStock(num, marca, modelo) {
+  const badge  = document.getElementById('stock-badge');
+  const text   = document.getElementById('stock-text');
+  if (!badge || !text) return;
+
+  if (num <= 1) {
+    badge.style.background  = 'rgba(239,68,68,0.18)';
+    badge.style.borderColor = 'rgba(239,68,68,0.55)';
+    text.innerHTML = `⚠️ <strong>ÚLTIMA unidade</strong> disponível para <strong>${marca} ${modelo}</strong>!`;
+  } else {
+    badge.style.background  = '';
+    badge.style.borderColor = '';
+    text.innerHTML = `🔥 Últimas <strong>${num}</strong> unidades para <strong>${marca} ${modelo}</strong> nesse preço!`;
   }
 }
-updateStockDisplay();
 
-// Schedule: -1 em 15s, -1 em 30s, -1 em 50s, depois a cada ~65s
-setTimeout(() => {
-  decrementStock();
-  setTimeout(() => {
-    decrementStock();
-    setTimeout(() => {
-      decrementStock();
-      setInterval(decrementStock, 65000);
-    }, 20000); // 50s total
-  }, 15000); // 30s total
-}, 15000); // 15s
+function startStockCountdown(marca, modelo) {
+  // Limpa timers anteriores (caso usuário troque o carro)
+  stockTimers.forEach(t => clearTimeout(t));
+  stockTimers = [];
+  stockStarted = true;
+
+  currentStock = modelToStock(marca + modelo);
+  renderStock(currentStock, marca, modelo);
+
+  // -1 após 5s (usuário ainda lendo o preço)
+  stockTimers.push(setTimeout(() => {
+    if (currentStock > 1) { currentStock--; renderStock(currentStock, marca, modelo); }
+
+    // -1 após 50s total (usuário está nos benefícios/vídeos)
+    stockTimers.push(setTimeout(() => {
+      if (currentStock > 1) { currentStock--; renderStock(currentStock, marca, modelo); }
+
+      // -1 após 120s total (usuário está nas reviews, esfriando)
+      stockTimers.push(setTimeout(() => {
+        if (currentStock > 1) { currentStock--; renderStock(currentStock, marca, modelo); }
+      }, 70000)); // 50s + 70s = 120s
+
+    }, 45000)); // 5s + 45s = 50s
+
+  }, 5000)); // 5s
+}
 
 // =====================
 // COLOR SELECTION
