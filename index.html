@@ -415,7 +415,8 @@
     @media(max-width:700px){ .kit-grid { grid-template-columns: 1fr; } }
 
     .kit-card {
-      background: var(--card);
+      background: var(--white);
+      color: var(--black);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 28px;
@@ -423,8 +424,8 @@
       transition: border-color 0.2s;
     }
     .kit-card.featured {
-      border-color: var(--orange);
-      background: linear-gradient(135deg, #1a0d00, var(--card));
+      border: 2px solid var(--orange);
+      background: var(--white);
     }
     .kit-badge {
       position: absolute;
@@ -445,12 +446,12 @@
       width: 100%;
       aspect-ratio: 4/3;
       object-fit: contain;
-      background: #0d0d0d;
+      background: #f5f5f5;
       border-radius: 10px;
       margin-bottom: 20px;
     }
     .kit-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-    .kit-includes { font-size: 12px; color: var(--gray); margin-bottom: 16px; }
+    .kit-includes { font-size: 12px; color: #555555; margin-bottom: 16px; }
     .kit-pieces {
       display: flex;
       gap: 6px;
@@ -468,7 +469,7 @@
     }
 
     /* Color picker */
-    .color-label { font-size: 12px; color: var(--gray); margin-bottom: 8px; }
+    .color-label { font-size: 12px; color: #555555; margin-bottom: 8px; }
     .color-options { display: flex; gap: 8px; margin-bottom: 20px; }
     .color-btn {
       width: 28px; height: 28px;
@@ -477,17 +478,17 @@
       cursor: pointer;
       transition: border-color 0.15s, transform 0.15s;
     }
-    .color-btn.active { border-color: var(--white); transform: scale(1.15); }
-    .color-btn.preto { background: #1a1a1a; box-shadow: inset 0 0 0 1px #555; }
+    .color-btn.active { border-color: var(--black); transform: scale(1.15); }
+    .color-btn.preto { background: #1a1a1a; box-shadow: inset 0 0 0 1px #ddd; }
     .color-btn.cinza { background: #888888; }
     .color-btn.bege { background: #C8A882; }
 
     .price-block { margin-bottom: 20px; }
-    .price-de { font-size: 13px; color: var(--gray); text-decoration: line-through; }
-    .price-por { font-size: 30px; font-weight: 900; color: var(--white); line-height: 1; }
+    .price-de { font-size: 13px; color: #555555; text-decoration: line-through; }
+    .price-por { font-size: 30px; font-weight: 900; color: var(--black); line-height: 1; }
     .price-por span { font-size: 17px; font-weight: 600; }
     .price-pix { font-size: 13px; color: var(--green); font-weight: 600; margin-top: 4px; }
-    .price-parcela { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .price-parcela { font-size: 12px; color: #555555; margin-top: 2px; }
     .price-economy {
       display: inline-block;
       background: rgba(34,197,94,0.15);
@@ -519,7 +520,7 @@
       display: flex;
       gap: 12px;
       font-size: 11px;
-      color: var(--gray);
+      color: #555555;
       justify-content: center;
     }
     .kit-guarantees span { display: flex; align-items: center; gap: 4px; }
@@ -1363,6 +1364,32 @@
       .top-bar { font-size: 11.5px; padding: 8px 12px; }
       .top-bar .timer-wrap { font-size: 12px; }
     }
+
+    /* BADGES */
+    .hero-stars {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-google-review {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      object-fit: contain;
+    }
+    .kit-trust-badge {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      margin-top: 16px;
+      border-radius: 6px;
+    }
+    .kit-guarantees-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -1407,9 +1434,7 @@
   <h1>Seu carro merece um tapete<br>feito <em>milímetro a milímetro</em><br>para ele</h1>
   <p class="hero-sub">Chega de tapete genérico que desliza, cheira borracha e deixa fresta. O PrimeCar 3D encaixa como peça original — impermeável, inodoro e protege o assoalho que vale milhares.</p>
   <div class="hero-stars">
-    <span class="stars">★★★★★</span>
-    <strong>4.9</strong>
-    <span>• 1.247 avaliações verificadas</span>
+    <img src="assets/googlereviews.webp" alt="4.9 Estrelas (950+ Avaliações auditadas pelo Google)" class="hero-google-review">
   </div>
 
   <!-- VEHICLE SELECTOR -->
@@ -1478,10 +1503,13 @@
         <button class="btn-checkout" onclick="checkout('interno')">
           🛡️ Garantir Kit Interno →
         </button>
-        <div class="kit-guarantees">
-          <span><span class="ic">✓</span> Frete Grátis</span>
-          <span><span class="ic">✓</span> Garantia 12 meses</span>
-          <span><span class="ic">✓</span> SSL seguro</span>
+        <div class="kit-guarantees-wrapper">
+          <div class="kit-guarantees">
+            <span><span class="ic">✓</span> Frete Grátis</span>
+            <span><span class="ic">✓</span> Garantia 12 meses</span>
+            <span><span class="ic">✓</span> SSL seguro</span>
+          </div>
+          <img src="assets/garantiadevolucao30dias.webp" alt="100% Sob Medida - 30 Dias Para Devolução" class="kit-trust-badge">
         </div>
         <div class="payment-flags">
           <span class="pflag pflag-visa">VISA</span>
@@ -1521,10 +1549,13 @@
         <button class="btn-checkout" onclick="checkout('completo')">
           🛡️ Garantir Kit Completo →
         </button>
-        <div class="kit-guarantees">
-          <span><span class="ic">✓</span> Frete Grátis</span>
-          <span><span class="ic">✓</span> Garantia 12 meses</span>
-          <span><span class="ic">✓</span> SSL seguro</span>
+        <div class="kit-guarantees-wrapper">
+          <div class="kit-guarantees">
+            <span><span class="ic">✓</span> Frete Grátis</span>
+            <span><span class="ic">✓</span> Garantia 12 meses</span>
+            <span><span class="ic">✓</span> SSL seguro</span>
+          </div>
+          <img src="assets/garantiadevolucao30dias.webp" alt="100% Sob Medida - 30 Dias Para Devolução" class="kit-trust-badge">
         </div>
         <div class="payment-flags">
           <span class="pflag pflag-visa">VISA</span>
