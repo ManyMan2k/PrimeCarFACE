@@ -360,6 +360,46 @@
       margin-top: 8px;
     }
 
+    /* SAC */
+    .sac-box {
+      max-width: 520px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .sac-header {
+      background: var(--orange);
+      padding: 20px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sac-header strong { font-size: 17px; color: #fff; font-weight: 800; }
+    .sac-header span { font-size: 13px; color: rgba(255,255,255,0.85); }
+    .sac-contacts { background: var(--card); }
+    .sac-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sac-row:last-child { border-bottom: none; }
+    .sac-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,107,0,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--orange);
+    }
+    .sac-info { display: flex; flex-direction: column; gap: 2px; }
+    .sac-info strong { font-size: 12px; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .sac-info a { font-size: 18px; font-weight: 800; color: var(--white); text-decoration: none; }
+    .sac-info a:hover { color: var(--orange); }
+
     /* CONTAINER */
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
     section { padding: 70px 0; }
@@ -1326,7 +1366,7 @@
     <a href="#avaliacoes">Avaliações</a>
     <a href="#garantia">Garantia</a>
     <a href="#confia">Sobre Nós</a>
-    <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener"><span class="online-dot"></span>SAC</a>
+    <a href="#sac" class="nav-sac"><span class="online-dot"></span>SAC</a>
   </nav>
 
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
@@ -1341,7 +1381,7 @@
   <a href="#avaliacoes" onclick="closeNav()">Avaliações</a>
   <a href="#garantia" onclick="closeNav()">Garantia</a>
   <a href="#faq" onclick="closeNav()">Sobre Nós</a>
-  <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="nav-sac" target="_blank" rel="noopener" onclick="closeNav()"><span class="online-dot"></span>💬 Falar com o SAC — online agora</a>
+  <a href="#sac" class="nav-sac" onclick="closeNav()"><span class="online-dot"></span>📞 Atendimento ao cliente</a>
 </nav>
 
 <!-- HERO -->
@@ -2214,7 +2254,39 @@
           E se eu não gostar ou não encaixar direito?
           <span class="arrow">▼</span>
         </button>
-        <div class="faq-a">Você tem 7 dias para devolução sem precisar justificar (direito do consumidor). E ainda conta com 12 meses de garantia contra qualquer defeito de fabricação. Entre em contato pelo WhatsApp ou e-mail e resolvemos rapidinho.</div>
+        <div class="faq-a">Você tem 7 dias para devolução sem precisar justificar (direito do consumidor). E ainda conta com 12 meses de garantia contra qualquer defeito de fabricação. Entre em contato pelo telefone (32) 4042-1609 ou e-mail e resolvemos rapidinho.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAC -->
+<section id="sac" style="background: var(--dark); padding: 48px 0;">
+  <div class="container">
+    <div class="sac-box">
+      <div class="sac-header">
+        <strong>Atendimento ao cliente</strong>
+        <span>Segunda a sexta, das 9h às 18h (dias úteis)</span>
+      </div>
+      <div class="sac-contacts">
+        <div class="sac-row">
+          <div class="sac-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l1.62-1.62a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="sac-info">
+            <strong>Vendas &amp; Suporte</strong>
+            <a href="tel:+553240421609">(32) 4042-1609</a>
+          </div>
+        </div>
+        <div class="sac-row">
+          <div class="sac-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </div>
+          <div class="sac-info">
+            <strong>E-mail</strong>
+            <a href="mailto:contato@primecarbrasil.com">contato@primecarbrasil.com</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2227,12 +2299,11 @@
     <p>Frete grátis • 12x sem juros • Garantia de 12 meses • Encaixe perfeito garantido</p>
     <div class="cta-btns">
       <a href="#kits" class="btn-primary">Escolher meu kit agora →</a>
-      <a href="https://wa.me/message/GZ6G2L5JPN53C1" class="btn-secondary"><span class="online-dot"></span>💬 Falar no WhatsApp — online agora</a>
     </div>
     <div class="trust-icons">
       <span><span class="ic">✓</span> Compra 100% segura</span>
       <span><span class="ic">✓</span> Dados protegidos SSL</span>
-      <span><span class="ic">✓</span> Suporte por WhatsApp</span>
+      <span><span class="ic">✓</span> Suporte por telefone e e-mail</span>
       <span><span class="ic">✓</span> 5.400+ veículos protegidos</span>
     </div>
   </div>
@@ -2259,7 +2330,8 @@
       <ul>
         <li><a href="/trocas-e-devolucoes">Trocas e Devoluções</a></li>
         <li><a href="/frete-e-prazo">Frete e Prazo</a></li>
-        <li><a href="https://wa.me/message/GZ6G2L5JPN53C1">WhatsApp</a></li>
+        <li><a href="tel:+553240421609">(32) 4042-1609</a></li>
+        <li><a href="mailto:contato@primecarbrasil.com">E-mail SAC</a></li>
       </ul>
     </div>
   </div>
