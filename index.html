@@ -274,7 +274,7 @@
 
     /* URGENCY WIDGET (only after vehicle selected) */
     #urgency-widget {
-      display: none;
+      display: block;
       max-width: 680px;
       margin: 16px auto 0;
       background: linear-gradient(135deg, #1a0a00, #150800);
@@ -282,10 +282,34 @@
       border-radius: 12px;
       padding: 16px 20px;
     }
-    #urgency-widget.visible { display: block; animation: slideDown 0.3s ease; }
     @keyframes slideDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
 
-    /* Loading state */
+    /* Timer row — always visible */
+    .urgency-timer-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--amber);
+      font-weight: 600;
+    }
+    .timer-display {
+      font-size: 20px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.05em;
+    }
+
+    /* Stock row — only after vehicle selection */
+    #urgency-stock-row { display: none; margin-top: 12px; border-top: 1px solid rgba(255,107,0,0.2); padding-top: 12px; }
+    #urgency-stock-row.loading { display: block; }
+    #urgency-stock-row.revealed { display: block; animation: slideDown 0.3s ease; }
+
     .urgency-loading {
       display: flex;
       align-items: center;
@@ -293,6 +317,8 @@
       font-size: 13px;
       color: var(--gray);
     }
+    #urgency-stock-row.revealed .urgency-loading { display: none; }
+
     .urgency-spinner {
       width: 16px; height: 16px;
       border: 2px solid var(--border);
@@ -303,10 +329,8 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Revealed state */
     .urgency-revealed { display: none; }
-    #urgency-widget.revealed .urgency-loading { display: none; }
-    #urgency-widget.revealed .urgency-revealed { display: block; }
+    #urgency-stock-row.revealed .urgency-revealed { display: block; }
 
     .urgency-top {
       display: flex;
@@ -330,20 +354,6 @@
     }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
     .stock-count { color: var(--red); font-size: 18px; }
-    .timer-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--amber);
-      font-weight: 600;
-    }
-    .timer-display {
-      font-size: 20px;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.05em;
-    }
     .urgency-sub {
       font-size: 11px;
       color: var(--gray);
@@ -1369,24 +1379,26 @@
 
   <!-- URGENCY WIDGET — só aparece após selecionar veículo -->
   <div id="urgency-widget">
-    <!-- Estado 1: loading (simulando consulta de estoque) -->
-    <div class="urgency-loading">
-      <div class="urgency-spinner"></div>
-      <span id="urgency-loading-label">Verificando estoque disponível...</span>
+    <!-- Timer — sempre visível -->
+    <div class="urgency-timer-row">
+      <div class="timer-box">
+        ⏱ Oferta expira em
+        <span class="timer-display" id="timer-display">1:40:00</span>
+      </div>
     </div>
-    <!-- Estado 2: revelado -->
-    <div class="urgency-revealed">
-      <div class="urgency-top">
+    <!-- Estoque — só após seleção do veículo -->
+    <div id="urgency-stock-row">
+      <div class="urgency-loading">
+        <div class="urgency-spinner"></div>
+        <span id="urgency-loading-label">Verificando estoque disponível...</span>
+      </div>
+      <div class="urgency-revealed">
         <div class="stock-badge">
           <div class="stock-dot"></div>
           <span>Últimas <span class="stock-count" id="stock-num">--</span> unidades neste preço</span>
         </div>
-        <div class="timer-box">
-          ⏱ Oferta expira em
-          <span class="timer-display" id="timer-display">14:59</span>
-        </div>
+        <div class="urgency-sub" id="urgency-car-label">Estoque reservado para o modelo selecionado</div>
       </div>
-      <div class="urgency-sub" id="urgency-car-label">Estoque reservado para o modelo selecionado</div>
     </div>
   </div>
 </section>
@@ -2381,33 +2393,49 @@ function verOpcoes() {
 // URGENCY LOGIC
 // Só dispara após seleção completa do veículo
 // =====================
+// URGENCY — timer global sempre ativo, estoque só após seleção
+// =====================
 let stockNum = 0;
-let timerInterval = null;
 let stockInterval = null;
-let timerSecs = 0;
 let revealTimeout = null;
 
-function triggerUrgency(carLabel) {
-  const widget = document.getElementById('urgency-widget');
+// Timer global — começa em 1h40min, persiste na sessão
+const TIMER_KEY = 'pc_offer_timer';
+const TIMER_START = 100 * 60; // 6000s = 1h40min
+let timerSecs = parseInt(sessionStorage.getItem(TIMER_KEY)) || TIMER_START;
 
-  // Mostra widget no estado "loading" — parece consulta real
-  widget.classList.remove('revealed');
-  widget.classList.add('visible');
+function updateTimerDisplay() {
+  const h = Math.floor(timerSecs / 3600);
+  const m = Math.floor((timerSecs % 3600) / 60).toString().padStart(2,'0');
+  const s = (timerSecs % 60).toString().padStart(2,'0');
+  const display = h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+  document.getElementById('timer-display').textContent = display;
+}
+
+// Inicia timer no carregamento da página
+updateTimerDisplay();
+setInterval(() => {
+  if (timerSecs > 0) timerSecs--;
+  else timerSecs = TIMER_START;
+  sessionStorage.setItem(TIMER_KEY, timerSecs);
+  updateTimerDisplay();
+}, 1000);
+
+function triggerUrgency(carLabel) {
+  const stockRow = document.getElementById('urgency-stock-row');
+  stockRow.className = 'loading';
   document.getElementById('urgency-loading-label').textContent =
     `Verificando estoque para ${carLabel}...`;
 
   clearTimeout(revealTimeout);
-  clearInterval(timerInterval);
   clearInterval(stockInterval);
 
-  // Após 1.4s revela o número — simula resposta do sistema
   revealTimeout = setTimeout(() => revealUrgency(carLabel), 1400);
 }
 
 function revealUrgency(carLabel) {
-  const widget = document.getElementById('urgency-widget');
+  const stockRow = document.getElementById('urgency-stock-row');
   const stockKey = 'pc_stock_' + carLabel.replace(/\s/g,'_');
-  const timeKey  = 'pc_time_'  + carLabel.replace(/\s/g,'_');
 
   let stock = parseInt(sessionStorage.getItem(stockKey));
   if (!stock || stock < 1) {
@@ -2419,24 +2447,8 @@ function revealUrgency(carLabel) {
   document.getElementById('urgency-car-label').textContent =
     `Estoque encontrado para ${carLabel} — reservado por tempo limitado`;
 
-  let remaining = parseInt(sessionStorage.getItem(timeKey));
-  if (!remaining || remaining <= 0) {
-    remaining = 14 * 60 + 59;
-    sessionStorage.setItem(timeKey, remaining);
-  }
-  timerSecs = remaining;
-  updateTimerDisplay();
+  stockRow.className = 'revealed';
 
-  widget.classList.add('revealed');
-
-  timerInterval = setInterval(() => {
-    timerSecs--;
-    if (timerSecs <= 0) timerSecs = 14 * 60 + 59;
-    sessionStorage.setItem(timeKey, timerSecs);
-    updateTimerDisplay();
-  }, 1000);
-
-  // Cai 1 unidade a cada 3 minutos — nunca chega a 0
   stockInterval = setInterval(() => {
     if (stockNum > 1) {
       stockNum--;
@@ -2447,17 +2459,10 @@ function revealUrgency(carLabel) {
 }
 
 function hideUrgency() {
-  const widget = document.getElementById('urgency-widget');
-  widget.classList.remove('visible', 'revealed');
+  const stockRow = document.getElementById('urgency-stock-row');
+  stockRow.className = '';
   clearTimeout(revealTimeout);
-  clearInterval(timerInterval);
   clearInterval(stockInterval);
-}
-
-function updateTimerDisplay() {
-  const m = Math.floor(timerSecs / 60).toString().padStart(2,'0');
-  const s = (timerSecs % 60).toString().padStart(2,'0');
-  document.getElementById('timer-display').textContent = `${m}:${s}`;
 }
 
 // =====================
