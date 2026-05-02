@@ -1537,7 +1537,45 @@
       flex: 1.5; background: var(--orange); color: #111; border: none;
       padding: 14px; border-radius: 10px; font-weight: 800; font-size: 15px; cursor: pointer;
       box-shadow: 0 4px 12px rgba(255,107,0,0.3);
+    /* SALES TOAST */
+    .sales-toast {
+      position: fixed;
+      bottom: -100px;
+      left: 20px;
+      background: var(--light-card);
+      border: 1px solid var(--light-border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      z-index: 9999;
+      width: calc(100% - 40px);
+      max-width: 320px;
+      transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s;
+      opacity: 0;
+      pointer-events: none;
     }
+    .sales-toast.show {
+      bottom: 20px;
+      opacity: 1;
+    }
+    @media(max-width: 768px) {
+      .sales-toast { left: 50%; transform: translateX(-50%); max-width: 90%; }
+      .sales-toast.show { bottom: 85px; } /* Acima do botão mobile CTA */
+    }
+    .toast-icon { 
+      width: 40px; height: 40px; 
+      border-radius: 50%; 
+      background: rgba(34,197,94,0.15); 
+      color: var(--green); 
+      display: flex; align-items: center; justify-content: center; 
+      font-size: 20px; flex-shrink: 0; 
+    }
+    .toast-text { font-size: 13px; color: var(--light-text); line-height: 1.4; }
+    .toast-text strong { font-weight: 700; color: var(--light-text); }
+    .t-time { font-size: 11px; color: var(--light-muted); margin-top: 2px; }
   </style>
 </head>
 <body>
@@ -1579,8 +1617,8 @@
 <!-- HERO -->
 <section id="inicio" class="hero">
   <div class="hero-badge">⚡ Tapete Bandeja 3D Premium • Edição Especial</div>
-  <h1>Seu carro merece um tapete<br>feito <em>milímetro a milímetro</em><br>para ele</h1>
-  <p class="hero-sub">Chega de tapete genérico que desliza, cheira borracha e deixa fresta. O PrimeCar 3D encaixa como peça original — impermeável, inodoro e protege o assoalho que vale milhares.</p>
+  <h1>O Fim da Sujeira Acumulada no<br>Assoalho do Seu <em>Carro</em></h1>
+  <p class="hero-sub">O Tapete Bandeja 3D Premium blinda 100% do seu assoalho. Fabricado sob medida a laser para o seu modelo: a sujeira cai, você tira, bate e pronto. Seu carro sempre com cara de zero.</p>
   <div class="hero-stars">
     <img src="assets/googlereviews.webp" alt="4.9 Estrelas (950+ Avaliações auditadas pelo Google)" class="hero-google-review">
   </div>
@@ -1651,11 +1689,11 @@
         <div class="kit-5in1-box">
           <div class="kit-5in1-title">O tapete <span>5 em 1</span></div>
           <ul class="kit-5in1-list">
-            <li><span class="check">✓</span> IMPERMEÁVEL</li>
-            <li><span class="check">✓</span> FÁCIL DE LIMPAR</li>
-            <li><span class="check">✓</span> ALTA DURABILIDADE</li>
-            <li><span class="check">✓</span> ENCAIXE SOB MEDIDA</li>
-            <li><span class="check">✓</span> VISUAL PREMIUM</li>
+            <li><span class="check">✓</span> 100% IMPERMEÁVEL (NÃO VAZA)</li>
+            <li><span class="check">✓</span> BATEU, LIMPOU EM 3 SEGUNDOS</li>
+            <li><span class="check">✓</span> BORDA ELEVADA ANTI-VAZAMENTO</li>
+            <li><span class="check">✓</span> ENCAIXE A LASER (NÃO ESCORREGA)</li>
+            <li><span class="check">✓</span> TPE ECOLÓGICO SEM CHEIRO</li>
           </ul>
         </div>
         <div class="color-label">Cor:</div>
@@ -1720,11 +1758,11 @@
         <div class="kit-5in1-box">
           <div class="kit-5in1-title">O tapete <span>5 em 1</span></div>
           <ul class="kit-5in1-list">
-            <li><span class="check">✓</span> IMPERMEÁVEL</li>
-            <li><span class="check">✓</span> FÁCIL DE LIMPAR</li>
-            <li><span class="check">✓</span> ALTA DURABILIDADE</li>
-            <li><span class="check">✓</span> ENCAIXE SOB MEDIDA</li>
-            <li><span class="check">✓</span> VISUAL PREMIUM</li>
+            <li><span class="check">✓</span> 100% IMPERMEÁVEL (NÃO VAZA)</li>
+            <li><span class="check">✓</span> BATEU, LIMPOU EM 3 SEGUNDOS</li>
+            <li><span class="check">✓</span> BORDA ELEVADA ANTI-VAZAMENTO</li>
+            <li><span class="check">✓</span> ENCAIXE A LASER (NÃO ESCORREGA)</li>
+            <li><span class="check">✓</span> TPE ECOLÓGICO SEM CHEIRO</li>
           </ul>
         </div>
         <div class="color-label">Cor:</div>
@@ -2574,6 +2612,15 @@
   </div>
 </footer>
 
+<!-- SALES TOAST -->
+<div id="sales-toast" class="sales-toast">
+  <div class="toast-icon">🛒</div>
+  <div class="toast-text">
+    <span id="toast-message">João S. de São Paulo comprou<br><strong>Kit Completo — Onix</strong></span>
+    <div class="t-time" id="toast-time">Agora mesmo</div>
+  </div>
+</div>
+
 <!-- CONFIRMATION MODAL -->
 <div id="checkout-modal" class="modal-overlay">
   <div class="modal-content">
@@ -3055,6 +3102,40 @@ document.querySelectorAll('.benefit-card, .review-card, .kit-card').forEach(el =
   <video id="modal-video" controls autoplay playsinline></video>
 </div>
 
+<script>
+  /* SALES TOAST SYSTEM */
+  const toastNames = ['Marcos P.', 'Lucas S.', 'Carlos M.', 'Roberto F.', 'Felipe T.', 'Rafael C.', 'Matheus B.', 'José A.', 'Ricardo V.', 'Patricia S.', 'Juliana T.', 'Camila R.', 'Fernando D.'];
+  const toastCities = ['São Paulo, SP', 'Rio de Janeiro, RJ', 'Belo Horizonte, MG', 'Curitiba, PR', 'Brasília, DF', 'Campinas, SP', 'Goiânia, GO', 'Porto Alegre, RS', 'Salvador, BA', 'Manaus, AM', 'Recife, PE'];
+  const toastProducts = ['Kit Completo — Corolla', 'Kit Interno — Kwid', 'Kit Completo — Compass', 'Kit Interno — Civic', 'Kit Completo — Onix', 'Kit Interno — Polo', 'Kit Completo — Hilux', 'Kit Interno — Argo', 'Kit Completo — Fastback'];
+  const toastTimes = ['Agora mesmo', 'Há 2 minutos', 'Há 5 minutos', 'Há 12 minutos'];
+
+  function showSalesToast() {
+    const toast = document.getElementById('sales-toast');
+    if(!toast) return;
+    
+    const randomName = toastNames[Math.floor(Math.random() * toastNames.length)];
+    const randomCity = toastCities[Math.floor(Math.random() * toastCities.length)];
+    const randomProd = toastProducts[Math.floor(Math.random() * toastProducts.length)];
+    const randomTime = toastTimes[Math.floor(Math.random() * toastTimes.length)];
+
+    document.getElementById('toast-message').innerHTML = `<strong>${randomName}</strong> de ${randomCity} comprou<br><strong>${randomProd}</strong>`;
+    document.getElementById('toast-time').innerText = randomTime;
+    
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 5000); // Exibe por 5 segundos
+  }
+
+  // Iniciar após 6 segundos, depois mostrar aleatoriamente a cada 15 a 30 segundos
+  setTimeout(() => {
+    showSalesToast();
+    setInterval(() => {
+      showSalesToast();
+    }, Math.floor(Math.random() * 15000) + 15000);
+  }, 6000);
+</script>
 <script defer src="~flock.js" data-proxy-url="/~api/analytics"></script>
 </body>
 </html>
