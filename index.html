@@ -1327,14 +1327,75 @@
       border-radius: 12px;
       background: rgba(255,255,255,0.02);
     }
+    /* ANTI-SLIP DETAIL SECTION */
+    #antiderrapante-section {
+      background: var(--light-card);
+      overflow: hidden;
+    }
+    .ads-header {
+      background: var(--black);
+      padding: 22px 28px;
+      text-align: center;
+    }
+    .ads-header h2 {
+      font-size: clamp(20px, 4vw, 30px);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+    .ads-header p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      font-style: italic;
+    }
+    .ads-body {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 28px 24px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .ads-main {
+      flex: 0 0 44%;
+    }
+    .ads-main img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+    .ads-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .ads-item img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      background: #222;
+    }
+    .ads-item span {
+      display: block;
+      font-size: 11px;
+      color: var(--light-muted);
+      margin-top: 6px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+    @media(max-width: 600px) {
+      .ads-body { flex-direction: column; gap: 16px; }
+      .ads-main { flex: none; width: 100%; }
+    }
   </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
-<div class="top-bar">
-  <span>🔥 <strong>OFERTA RELÂMPAGO</strong> — Frete Grátis + 12x sem juros • Últimas unidades neste preço <span class="blink">⚡</span></span>
-</div>
 
 <!-- HEADER -->
 <header>
@@ -1868,6 +1929,37 @@
       <div class="feature-content">
         <h3>Material TPE de alta densidade — <em>sem odor</em></h3>
         <p>Tecnologia termoplástica premium usada por montadoras. Resistente a temperaturas extremas, não deforma no verão, não endurece no inverno. E sem aquele cheiro de borracha barata.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTI-SLIP DETAIL SECTION -->
+<section id="antiderrapante-section">
+  <div class="ads-header">
+    <h2>DESIGN ANTIDERRAPANTE &amp; ELEGANTE</h2>
+    <p>Projetado para máxima estabilidade — encaixa e combina perfeitamente com o interior do seu carro.</p>
+  </div>
+  <div class="ads-body">
+    <div class="ads-main">
+      <img src="assets/tp6-instalado-B_3EoPkF.webp" alt="Tapete PrimeCar 3D instalado">
+    </div>
+    <div class="ads-grid">
+      <div class="ads-item">
+        <img src="assets/tp3-textura-7Piw0fvh.webp" alt="Bolinhas antiderrapantes">
+        <span>Bolinhas antiderrapantes para direção segura</span>
+      </div>
+      <div class="ads-item">
+        <img src="assets/tp5-impermeavel-DDZCocOH.webp" alt="Ranhuras profundas">
+        <span>Ranhuras profundas retêm líquidos e sujeira</span>
+      </div>
+      <div class="ads-item">
+        <img src="assets/tp7-borda-elevada-DUkQfJFg.webp" alt="Borda elevada">
+        <span>Borda elevada 3cm evita vazamentos no assoalho</span>
+      </div>
+      <div class="ads-item">
+        <img src="assets/tp4-fixacao-BUULKmgM.webp" alt="Ilhós de fixação">
+        <span>Design exclusivo para o interior do seu carro</span>
       </div>
     </div>
   </div>
@@ -2479,8 +2571,8 @@ function selectColor(kit, cor, btn) {
 // CHECKOUT WITH UTM
 // =====================
 const CHECKOUT_URLS = {
-  'completo': 'https://seguro.primecarbr.com/api/public/shopify?product=3079992272944&store=30799',
-  'interno': 'https://seguro.primecarbr.com/api/public/shopify?product=3079964175412&store=30799',
+  'completo': '',
+  'interno': '',
 };
 const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','src','sck','xcod'];
 
